@@ -1,0 +1,22 @@
+{
+  "name": "vaq",
+  "version": "1.0.0",
+  "description": "a set of front-end developer tools, like suggest, mask, alert, ajax, and so on",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoage/vaq.git"
+  },
+  "keywords": [
+    "vaq"
+  ],
+  "author": "luoage@msn.cn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luoage/vaq/issues"
+  },
+  "homepage": "https://github.com/luoage/vaq#readme"
+}
