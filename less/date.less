@@ -1,0 +1,191 @@
+@import '../common/base.less';
+
+.lg-dates {
+	position: absolute;
+	border: 1px solid #ccc;
+
+	/* shadow */
+	box-shadow: 0 0 5px #ccc;
+
+	/* no select */
+	user-select:none;
+
+	width: 28 * 7px;
+	display: inline-block;
+
+	.bg-gray {
+		background-color: #ccc;
+	}
+
+	.lg-dates-pos {
+		position: relative;
+	}
+
+	.lg-title {
+		text-align: center;
+		line-height: 30px;
+		height: 30px;
+
+		span {
+			text-decoration: underline;
+			font-weight: bold;
+			text-align: center;
+			padding: 3px 10px;
+			cursor: pointer;
+		}
+
+		span:hover {
+			background-color: #ccc;
+		}
+	}
+
+	.lg-main{
+		float: left;
+
+		.lg-week {
+			font-weight: bold;
+			background-color: #ccc;
+			width: 100%;
+		}
+
+		ul, li {
+			float: left;
+		}
+
+		li {
+			text-align: center;
+			width: 28px;
+			height: 28px;
+			line-height: 28px;
+		}
+
+		.lg-day {
+			clear: left;
+			margin: 5px 0;
+
+			li:hover {
+				background-color: #ccc;
+			}
+			
+			li {
+				border-radius: 2px;
+				cursor: pointer;
+			}
+		}
+	}
+
+	/* scrollbar and thumb */
+	.lg-scrollbar {
+		&::-webkit-scrollbar {
+			height: 6px;
+			width: 6px;
+			background: #f5f5f5;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #bbb; 
+		}
+
+		&::-scrollbar::-webkit-scrollbar-track {
+			background-color: #F5F5F5;  
+		}
+	}
+
+	.lg-time {
+		display: none;
+
+		width: 28 * 7px;
+		position: absolute;
+		bottom: 24px;
+		left: -1px;
+		background-color: white;
+		border: 1px solid #ccc;
+
+		.lg-time-title {
+			height: 30px;
+			line-height: 30px;
+
+			>div{
+				text-align: center;
+				float: left;
+				margin-left: 10px;
+				width: 50px;
+			}
+		}
+
+		ul, .lg-time-title {
+			float: left;
+		}
+
+		ul {
+			height: 150px;
+			margin-left: 10px;
+			border: 1px solid #ccc;
+			border-bottom: none;
+
+			li {
+				height: 20px;
+				line-height: 20px;
+
+				&:hover {
+					background-color: #ccc;
+					cursor: pointer;
+				}
+			}
+		}
+
+		.lg-hour, .lg-minute, .lg-second {
+			width: 50px;
+			overflow-y: auto;
+			text-align: center;
+		}
+
+	}
+
+	.lg-bottom {
+		clear: left;
+		height: 25px;
+		line-height: 25px;
+		border-top: 1px solid #ccc;
+	}
+
+	.lg-buttons {
+		float: right;
+
+		.lg-button {
+			cursor: pointer;
+			display: inline-block;
+			width: 30px;
+			text-align: center;
+			height: 25px;
+			line-height: 25px;
+			text-decoration: underline;
+			margin-left: 3px;
+		}
+		.lg-button:hover {
+			background-color: #ccc;
+		}
+	}
+
+	.lg-time-button {
+		cursor: pointer;
+		display: inline-block;
+
+		>span {
+			width: 24px;
+			text-align: center;
+			display: inline-block;
+		}
+
+		&:hover {
+			background-color: #ccc;
+		}
+	}
+
+	.lg-selected {
+		background-color: #ccc;
+	}
+	.lg-today {
+		background-color: #ffb733;
+	}
+}
