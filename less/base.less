@@ -1,0 +1,18 @@
+.opacity(@value){
+	@valueTmp: @value * 100;
+	filter:alpha(opacity=@valueTmp);
+	-moz-opacity: @value;
+	-khtml-opacity: @value;
+	opacity: @value;
+}
+.border-radius(@value: 3px) {
+	border-radius: @value;
+	-ms-border-radius: @value;
+	-webkit-border-radius: @value;
+	-moz-border-radius: @value;
+}
+
+
+@import './reset';
+@import './popup';
+@import './mask';

@@ -1,0 +1,123 @@
+@border-color: #ccc;
+@content-color: white;
+@title-color: #333;
+@render-color: #444;
+@white: #fff;
+@black: #000;
+
+html.lg-overflow{
+	overflow: hidden !important;
+}
+
+.lg-popup {
+	z-index: 101;
+	font-size: 12px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	.content-shadow() {
+		@shadow: 1px 1px 5px @border-color;
+		box-shadow: @shadow;
+		-ms-box-shadow: @shadow;
+		-webkit-box-shadow: @shadow;
+		-moz-box-shadow: @shadow;
+	}
+	.button-appearance() {
+		appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		-moz-appearance: none;
+	}
+
+	.lg-container {
+		position: absolute;
+		text-align: center;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+  	white-space: nowrap;
+
+		&:before {
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+			margin-left: -0.25em;
+		}
+	}
+
+	.lg-content {
+		color: @render-color;
+		.content-shadow();
+		.border-radius();
+
+		vertical-align: middle;
+		border: 1px solid @border-color;
+		position: relative;
+		min-width: 300px;
+		white-space: initial;
+		background-color: @content-color;
+		text-align: left;
+		display: inline-block;
+		margin: 0 auto;
+		padding: 32px 20px 32px;
+
+		.lg-title {
+			color: @title-color;
+			position: relative;
+			min-height: 20px;
+			padding-right: 44px;
+			font-size: 1.4em;
+			top: -10px;
+		}
+
+		.lg-close {
+			color: @border-color;
+			font-size: 2.3em;
+			box-shadow: none;
+			display: block;
+			text-decoration: none;
+			background-color: @content-color;
+			color: #000;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 32px;
+			height: 32px;
+			line-height: 32px;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		.lg-buttons {
+			text-align: center;
+			margin-top: 20px;
+
+			a {
+				color: @black;
+				display: inline-block;
+				text-decoration: none;
+				margin-right: 20px;
+				min-width: 60px;
+				padding: 0 10px;
+				height: 30px;
+				line-height: 30px;
+				/*border: 1px solid #ccc;*/
+				background-color: #dedede;
+				font-size: 1.2em;
+				.border-radius();
+
+				&:hover {
+					color: @render-color;
+				}
+			}
+
+		}
+	}
+}

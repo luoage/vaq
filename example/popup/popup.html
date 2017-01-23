@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="lg-overflow">
+	<head>
+		<title>popup</title>
+		<link rel="stylesheet/less" type="text/css" href="/less/base.less" />
+
+		<script>
+			less = {
+				env: "development"
+			};
+		</script>
+		<script src="/example/less.js"></script>
+
+		<script src="/example/jquery.min.js"></script>
+		<script src="/example/require.min.js"></script>
+	</head>
+	<body>
+
+		<button id="1">test1</button>
+		<button id="2">test2</button>
+
+		<script type="text/template" node-type="template1">
+			<div style="width: 800px; margin: 0 auto;">
+			<div style="width: 100%;margin: 1px; background-color: red;">
+				test1
+				<div style="width: 100%; background-color: white;">
+					It\'s is a test of the popup
+				</div>
+				test3
+			</div>
+			</div>
+		</script>
+
+		<script type="text/template" node-type="template2">
+			<table width="600">
+				<tr>
+					<th>name</th>
+					<th>age</th>
+					<th>age</th>
+				</tr>
+				<[ for(var i=0;i<500;i++) {]>
+				<tr>
+					<td>name</td>
+					<td>age</td>
+					<td>age</td>
+				</tr>
+				<[ } ]>
+			</table>
+		</script>
+
+		<script>
+			less.watch();
+
+			define('jquery', function() {
+				return window.jQuery;
+			});
+
+			require(['../../popup', '../../base'], function(Popup, base) {
+				var nodes = base.getNodes();
+
+				$(document).on('click', 'button', function() {
+					var id = this.id || 1;
+					new Popup({
+						title: 'luoage#msn.cn',
+						html: base.template(nodes['template' + id].innerHTML)({}),
+						buttons: [
+							{
+								name: '确定',
+								cb: function(popup) {
+
+									popup.inline({
+										close: false,
+										buttons: [
+											{
+												name: 'prev',
+											},
+											{
+												name: 'next',
+												cb: function(popup) {
+													popup.inline({
+														title: '试试中文',
+														html: '开个玩笑 !',
+														close: true,
+														buttons: [
+															{
+																name: 'back'
+															}
+														]
+													});
+												}
+											}
+										],
+										title: 'I am the next',
+										html: 'just a joke !'
+									});
+								}
+							},
+							{
+								name: '取消'
+							}
+						]
+					})
+					.complete(function(_this) {
+						_this.popup.find('.lg-title').on('click', function() {
+							console.log('tst');
+						});
+					});
+
+				});
+
+			});
+		</script>
+	</body>
+</html>

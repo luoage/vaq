@@ -62,8 +62,18 @@
  *
  */
 
-define(function() {
-	var base = require('lib/base');
+(function(factory) {
+	// CommonJs
+	if (typeof exports === 'object' && typeof module === 'object') {
+		module.exports = factory(require);
+	// requirejs
+	} else if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else {
+		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
+	}
+})(function(require) {
+	var base = require('./base');
 
 	var Seq = base.inherit().$extend({
 		/**

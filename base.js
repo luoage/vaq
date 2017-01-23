@@ -1,11 +1,7 @@
 /* global $: true, decodeURIComponent: true, setTimeout: true, clearTimeout: true */
 
 define(function(require) {
-	require('lib/jq_mask');
-	require('dep/jquery-confirm/jquery-confirm');
-	require('dep/bootstrap-datepicker/bootstrap-datepicker');
-
-	var dialog = require('lib/dialog');
+	var Mask = require('./mask');
 
 	var request = function() {
 		$.ajaxPrefilter(function(options, originalOptions, jqXhr) {
@@ -22,7 +18,7 @@ define(function(require) {
 			var mask;
 
 			if (options.mask) {
-				mask = $(options.mask.target).mask(options.mask).render();
+				mask = new Mask(options.mask.target).mask(options.mask).render();
 
 				delete options.mask;
 			}
@@ -294,10 +290,10 @@ define(function(require) {
 			var name;
 
 			if (context && !context instanceof HTMLElement) {
-				throw new Error('illegal parameter .');
+				throw new Error('illegal parameter.');
 			}
 
-			(context ? context.querySelectorAll('[node-type]') : document.querySelectorAll('[node-type]')).forEach(function(ele) {
+			Array.prototype.forEach.call((context || document).querySelectorAll('[node-type]'), function(ele) {
 				name = ele.getAttribute('node-type');
 				name && (nodes[name] = ele);
 			});
@@ -435,23 +431,7 @@ define(function(require) {
 			});
 
 			return newObj;
-		},
-
-		selectDate: function(node) {
-			return $(node).datepicker({
-				autoclose: true,
-				todayHighlight: true,
-				language: 'zh-CN',
-				weekStart: 1,
-				format: 'yyyy-mm-dd',
-				templates: {
-					leftArrow: '&lt;',
-					rightArrow: '&gt;'
-				},
-				zIndexOffset: 999
-			});
 		}
-
 	};
 
 	return base;

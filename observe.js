@@ -11,10 +11,10 @@
  * observe.publish('trigger-body', $('body'), map, 222);
  */
 
-define(function() {
-	var base = require('lib/base');
+define(function(require) {
+	var base = require('./base');
 
-	var Observe = base.inherit().$extend({
+	var Observe = base.inherit({
 
 		/**
 		 * @constructor

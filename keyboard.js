@@ -83,6 +83,10 @@ define(function() {
 
 			// 数字, 小数字键盘
 			return (code >= 48 && code <= 57) || (code >= 96 && code <= 105) || code === 190;
+		},
+
+		isEsc: function(e) {
+			return keyCode(e) === 27;
 		}
 	};
 

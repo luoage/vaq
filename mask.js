@@ -1,17 +1,33 @@
 /**
- * by jl
- *
  * 遮罩
+ * @author luoage@msn.cn
  *
+ * @dep jquery
  * @example
  *
- * var mask = $('..').mask(); // 生成遮罩
- * mask.render(); // 遮罩生效
- * mask.remove();
- *
  */
-define(function() {
-	var mask = $('<div>').addClass('mask');
+(function(factory) {
+	// CommonJs
+	if (typeof exports === 'object' && typeof module === 'object') {
+		module.exports = factory(require);
+	// requirejs
+	} else if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else {
+		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
+	}
+})(function(require) {
+	var $ = require('jquery');
+
+	var mask = $('<div>').addClass('lg-mask').addClass('lg-lg-lg');
+	var config = {
+		loading: true, // 是否增加背景loading图片
+		layout: $('body'),
+		css: {
+			zIndex: 100
+		},
+		setPos: true
+	};
 
 	/**
 	 * @constructor
@@ -19,19 +35,10 @@ define(function() {
 	var Mask = function(target, _config) {
 		this.config = {};
 
-		var config = {
-			loading: true, // 是否增加背景loading图片
-			layout: $('body'),
-			css: {
-				zIndex: 100
-			},
-			setPos: true
-		};
-
 		$.extend(this.config, config, _config);
 		// 遮罩层
 		this._mask = mask.css(this.config.css);
-		this.config.loading && this._mask.addClass('ajax-loading');
+		this.config.loading && this._mask.addClass('lg-ajax-loading');
 		this.target = target;
 	};
 
@@ -69,7 +76,5 @@ define(function() {
 
 	};
 
-	$.fn.mask = function(config) {
-		return new Mask(this, config);
-	};
+	return Mask;
 });
