@@ -31,6 +31,7 @@
 	var keyboard = require('lib/keyboard');
 	var observe = require('lib/observe');
 	var Seq = require('lib/seq');
+	var request = require('./request');
 
 	var $div = $('<div class="suggest"></div>');
 	var cacheObj = {};
@@ -125,7 +126,7 @@
 					if (typeof cacheObj[sign] !== 'undefined') {
 						return this(cacheObj[sign]);
 					} else {
-						base.request({url: url, data: requestData}, this);
+						request({url: url, data: requestData}, this);
 					}
 				})
 				.seq(function(list) {

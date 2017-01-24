@@ -3,7 +3,7 @@
  * @author luoage@msn.cn
  *
  * @dep jquery
- * @dep ./jq_mask
+ * @dep ./mask
  * @dep ./base
  * @example
  *
