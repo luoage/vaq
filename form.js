@@ -12,7 +12,8 @@
  *
  */
 
-define(function() {
+define(function(require) {
+	var $ = require('jquery');
 	var jQuery = $;
 	var rCRLF = /\r?\n/g;
 	var rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i;
@@ -58,7 +59,7 @@ define(function() {
 		return this.map(function() {
 			var that = this;
 			var tagName = this.tagName.toLowerCase();
-			
+
 			if (!rsubmittable.test(tagName) && tagName !== 'form') {
 				// throw new Error('jQuery selector must be a form tag');
 				var clone = $(this).clone();

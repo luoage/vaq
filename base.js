@@ -1,7 +1,11 @@
-/* global $: true, decodeURIComponent: true, setTimeout: true, clearTimeout: true */
-
 define(function(require) {
+	var $ = require('jquery');
 	var Mask = require('./mask');
+	var Popup = require('./popup');
+
+	var tip = function(html) {
+		return new Popup({html: html, delayTime: 3000});
+	};
 
 	var request = function() {
 		$.ajaxPrefilter(function(options, originalOptions, jqXhr) {
@@ -28,7 +32,7 @@ define(function(require) {
 					res = res || {};
 
 					if (+res.code !== 0) {
-						dialog.tip(res.msg || '网络有误，请稍后重试！');
+						tip(res.msg || '网络有误，请稍后重试！');
 						return;
 					}
 
@@ -39,7 +43,7 @@ define(function(require) {
 						return fail(res);
 					}
 
-					dialog.tip(res.msg || '网络有误，请稍后重试！');
+					tip(res.msg || '网络有误，请稍后重试！');
 				})
 				.always(function() {
 					mask && mask.remove();
@@ -200,7 +204,7 @@ define(function(require) {
 				'<': '&lt;',
 				'>': '&gt;',
 				'"': '&quot;',
-				"'": '&#x27;',
+				'\'': '&#x27;',
 				'`': '&#x60;'
 			};
 			var regexp = new RegExp('(?:' + Object.keys(map).join('|') + ')', 'g');
@@ -289,7 +293,7 @@ define(function(require) {
 			var nodes = {};
 			var name;
 
-			if (context && !context instanceof HTMLElement) {
+			if (context && !(context instanceof HTMLElement)) {
 				throw new Error('illegal parameter.');
 			}
 

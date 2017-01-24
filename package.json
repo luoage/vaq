@@ -1,22 +1,17 @@
 {
   "name": "vaq",
-  "version": "1.0.0",
-  "description": "a set of front-end developer tools, like suggest, mask, alert, ajax, and so on",
-  "main": "index.js",
+  "private": false,
+  "version": "0.1.0",
+  "description": "前端整套工具",
+  "main": "base.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "node_modules/.bin/eslint --cache --cache-location=./.eslintcache ./"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/luoage/vaq.git"
-  },
-  "keywords": [
-    "vaq"
-  ],
-  "author": "luoage@msn.cn",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/luoage/vaq/issues"
-  },
-  "homepage": "https://github.com/luoage/vaq#readme"
+  "author": "luoage",
+  "devDependencies": {
+    "eslint": "3.4.0",
+    "eslint-config-standard": "6.0.0",
+    "eslint-plugin-promise": "2.0.1",
+    "eslint-plugin-standard": "2.0.0"
+  }
 }

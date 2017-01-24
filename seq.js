@@ -97,7 +97,7 @@
 			if (this._isEnd) {
 				return;
 			}
-			
+
 			if (!fn) {
 				this._isEnd = true;
 			}

@@ -1,5 +1,3 @@
-/* global: $, setTimeout: true, clearTimeout: true */
-
 /**
  * by jl
  *
@@ -16,7 +14,18 @@
  *
  */
 
-define(function() {
+(function(factory) {
+	// CommonJs
+	if (typeof exports === 'object' && typeof module === 'object') {
+		module.exports = factory(require);
+	// requirejs
+	} else if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else {
+		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
+	}
+})(function(require) {
+	var $ = require('jquery');
 	var base = require('lib/base');
 	var Scroll = require('lib/scroll');
 	var keyboard = require('lib/keyboard');

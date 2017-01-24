@@ -26,25 +26,25 @@
 	var layout = $('body').addClass('lg-lg-lg');
 	var eleHtml = $('html');
 
-	var template = 
-		'				<div class="lg-content">'
-		+'					<[ if(opts.closeIcon) {]>'
-		+'					<a class="lg-close" href="javascript:;">×</a>'
-		+'					<[ } ]>'
-		+'					<[ if(opts.title) {]>'
-		+'					<div class="lg-title"><[- opts.title ]></div>'
-		+'					<[ } ]>'
-		+'					<div class="lg-render">'
-		+'					<[- opts.html ]>'
-		+'					</div>'
-		+'					<[ if(opts.buttons && opts.buttons.length ) {]>'
-		+'						<div class="lg-buttons">'
-		+'							<[ opts.buttons.forEach(function(item) {]>'
-		+'							<a href="javascript:;" data-name="<[- item.name ]>"><[- item.name ]></a>'
-		+'							<[ }) ]>'
-		+'						</div>'
-		+'					<[ } ]>'
-		+'				</div>'
+	var template = ''
+		+ '				<div class="lg-content">'
+		+ '					<[ if(opts.closeIcon) {]>'
+		+ '					<a class="lg-close" href="javascript:;">×</a>'
+		+ '					<[ } ]>'
+		+ '					<[ if(opts.title) {]>'
+		+ '					<div class="lg-title"><[- opts.title ]></div>'
+		+ '					<[ } ]>'
+		+ '					<div class="lg-render">'
+		+ '					<[- opts.html ]>'
+		+ '					</div>'
+		+ '					<[ if(opts.buttons && opts.buttons.length ) {]>'
+		+ '						<div class="lg-buttons">'
+		+ '							<[ opts.buttons.forEach(function(item) {]>'
+		+ '							<a href="javascript:;" data-name="<[- item.name ]>"><[- item.name ]></a>'
+		+ '							<[ }) ]>'
+		+ '						</div>'
+		+ '					<[ } ]>'
+		+ '				</div>'
 		;
 
 	var options = {
@@ -103,7 +103,6 @@
 					this.back();
 				}.bind(this), opts.delayTime)();
 			}
-
 		},
 
 		createTarget: function() {
@@ -118,8 +117,7 @@
 			var stack = this._stack.pop();
 
 			$.extend(this, stack);
-
-			this.opts.target.html(stack.target);	
+			this.opts.target.html(stack.target);
 		},
 
 		inline: function(inlineOpts) {
@@ -157,10 +155,9 @@
 
 					var result = opt.cb ? opt.cb(_this) : undefined;
 
-					if(opt.cb === undefined || result === true) {
+					if (opt.cb === undefined || result === true) {
 						_this._stack.length ? _this.back() : _this.remove();
 					}
-
 				});
 			});
 		},
@@ -172,7 +169,7 @@
 
 			this.target.html(html);
 			this.opts.target.html(this.target);
-		},
+		}
 
 	});
 

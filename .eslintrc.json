@@ -1,0 +1,53 @@
+{
+  "extends":"standard",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": 0
+    }
+  },
+
+  "env": {
+    "browser" : true,
+    "es6": true,
+    "commonjs": true,
+    "node": true,
+    "amd": true
+  },
+
+  "plugins": [
+  ],
+
+  "globals": {
+  },
+
+  "rules": {
+    "strict": [2, "global"],
+    "linebreak-style": [2, "unix"],
+    "no-alert": 2,
+    "semi": [2, "always"],
+    "space-before-function-paren": 0,
+    "block-scoped-var": 2,
+    "one-var": 2,
+    "quotes": [2, "single"],
+    "space-before-blocks": 2,
+    "one-var-declaration-per-line": 2,
+    "no-multiple-empty-lines": [2, { "maxBOF": 0, "max": 2, "maxEOF": 0 }],
+    "max-len": [2, 150, 4, {
+      "comments": 180
+    }],
+    "max-depth": [2, { "max": 4 }],
+    "max-params": [2, { "max": 5 }],
+    "max-statements": [2, { "max": 60 }],
+    "newline-after-var":[2, "always"],
+    "no-tabs":0,
+    "indent": [2, "tab", {"SwitchCase": 1}],
+    "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+    "wrap-iife": [2],
+    "no-lonely-if": 2,
+    "brace-style": [2, "1tbs", {"allowSingleLine": false}],
+    "curly": [2, "all"],
+    "no-console": 2,
+    "no-debugger": 2,
+    "operator-linebreak": [2, "before"]
+  }
+}
