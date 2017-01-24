@@ -27,9 +27,8 @@
 	var eleHtml = $('html');
 
 	var template = 
-		'			<div class="lg-container">'
-		+'				<div class="lg-content">'
-		+'					<[ if(opts.close) {]>'
+		'				<div class="lg-content">'
+		+'					<[ if(opts.closeIcon) {]>'
 		+'					<a class="lg-close" href="javascript:;">×</a>'
 		+'					<[ } ]>'
 		+'					<[ if(opts.title) {]>'
@@ -46,80 +45,97 @@
 		+'						</div>'
 		+'					<[ } ]>'
 		+'				</div>'
-		+'			</div>'
 		;
 
 	var options = {
+		target: $('<div>'),
+		isMask: true,
 		layout: layout,
 		title: '',
-		css: {},
-		close: true,
+		closeIcon: true,
 		buttons: [],
-		html: ''
+		html: '',
+		autoBack: false, // 自动返回，如果没有可返回会自动关闭, 和autoClose参数公用delayTime
+		autoClose: false,
+		delayTime: 3000 // delay time /ms
 	};
 
 	var Popup = base.inherit({
 		// 初始化
-		initialize: function(opts) {
-			this.opts = $.extend({
-				target: $('<div>'),
-				isMask: true
-			}, options, opts);
+		initialize: function(opt) {
+			this.opts = $.extend({}, options, opt);
 
 			this._stack = []; // 弹窗队列, 用于在一个弹窗中切换内容
+			this.addEvent();
 
 			var opts = this.opts;
 
-			opts.target.addClass('lg-popup').css(opts.css);
+			opts.target.addClass('lg-popup');
 			eleHtml.addClass('lg-overflow');
 
-			this.target = $('<div>');
-
-			this.popup = this.target;
-			this.addEvent();
-			this.render();
+			this.helpInline();
 
 			opts.layout.append(opts.target);
 			if (opts.isMask && !opts.mask) {
-				this.opts.mask = new Mask(opts.target, {loading: false}).render();
+				this.mask = new Mask(opts.target, {loading: false}).render();
 			}
+		},
+
+		helpInline: function() {
+			this.target = this.createTarget();
+			this.popup = this.target;
+
+			this.render();
+			this.auto();
+		},
+
+		auto: function() {
+			var opts = this.opts;
+
+			if (opts.autoClose === true) {
+				base.delay(function() {
+					this.remove();
+				}.bind(this), opts.delayTime)();
+			}
+
+			if (opts.autoBack === true) {
+				base.delay(function() {
+					this.back();
+				}.bind(this), opts.delayTime)();
+			}
+
+		},
+
+		createTarget: function() {
+			return $('<div>').addClass('lg-container');
 		},
 
 		complete: function(cb) {
 			typeof cb === 'function' && cb(this);
 		},
 
-		/**
-		 *
-		 */
 		back: function() {
 			var stack = this._stack.pop();
 
 			$.extend(this, stack);
 
-			/*
-			console.log(stack.target);
-			console.log(stack.opts);
-			console.log(this);return;
-			*/
-
 			this.opts.target.html(stack.target);	
 		},
 
-		inline: function(options) {
+		inline: function(inlineOpts) {
 			this._stack.push({
-				target: $(this.target).clone(true, true),
+				target: this.target.clone(true, true),
 				opts: this.opts
 			});
 
-			this.target = $('<div>');
-			this.render(options);
+			this.opts = $.extend({}, options, inlineOpts);
+			this.helpInline();
 		},
 
 		remove: function() {
 			var opts = this.opts;
 
-			opts.mask && opts.mask.remove();
+			this.mask && this.mask.remove();
 			opts.target.remove();
 			eleHtml.removeClass('lg-overflow');
 		},
@@ -149,9 +165,7 @@
 			});
 		},
 
-		render: function(opts) {
-			this.opts = $.extend({}, this.opts, opts);
-
+		render: function() {
 			var html = base.template(template)({
 				opts: this.opts
 			});

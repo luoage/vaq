@@ -16,8 +16,11 @@
 	</head>
 	<body>
 
-		<button id="1">test1</button>
-		<button id="2">test2</button>
+		<button id="group">group</button>
+		<button id="list">list</button>
+		<button id="alert">alert</button>
+		<button id="confirm">confirm</button>
+		<button id="tip">tip</button>
 
 		<script type="text/template" node-type="template1">
 			<div style="width: 800px; margin: 0 auto;">
@@ -32,20 +35,22 @@
 		</script>
 
 		<script type="text/template" node-type="template2">
-			<table width="600">
-				<tr>
-					<th>name</th>
-					<th>age</th>
-					<th>age</th>
-				</tr>
-				<[ for(var i=0;i<500;i++) {]>
-				<tr>
-					<td>name</td>
-					<td>age</td>
-					<td>age</td>
-				</tr>
-				<[ } ]>
-			</table>
+			<div style="width: 600px;height: 400px; overflow: auto;">
+				<table width="100%">
+					<tr>
+						<th>name</th>
+						<th>age</th>
+						<th>age</th>
+					</tr>
+					<[ for(var i=0;i<500;i++) {]>
+					<tr>
+						<td>name</td>
+						<td>age</td>
+						<td>age</td>
+					</tr>
+					<[ } ]>
+				</table>
+			</div>
 		</script>
 
 		<script>
@@ -58,54 +63,105 @@
 			require(['../../popup', '../../base'], function(Popup, base) {
 				var nodes = base.getNodes();
 
+
+				var obj = {
+					group: function() {
+						new Popup({
+							title: 'luoage#msn.cn',
+							html: base.template(nodes.template1.innerHTML)({}),
+							buttons: [
+								{
+									name: '确定',
+									cb: function(popup) {
+
+										popup.inline({
+											closeIcon: false,
+											buttons: [
+												{
+													name: 'prev',
+												},
+												{
+													name: 'next',
+													cb: function(popup) {
+														popup.inline({
+															title: '试试中文',
+															html: '开个玩笑 !',
+															closeIcon: true,
+															buttons: [
+																{
+																	name: 'back'
+																}
+															]
+														});
+													}
+												}
+											],
+											title: 'I am the next',
+											html: 'just a joke !'
+										});
+									}
+								},
+								{
+									name: '取消'
+								}
+							]
+						})
+						.complete(function(_this) {
+							_this.popup.find('.lg-title').on('click', function() {
+								console.log('tst');
+							});
+						});
+					},
+					list: function() {
+						new Popup({
+							title: 'list',
+							html: base.template(nodes.template2.innerHTML)({})
+						});
+					},
+					confirm: function() {
+						new Popup({
+							html: '你这个做法是错滴，你需要改正？',
+							buttons: [
+								{
+									name: '确定',
+									cb: function(popup) {
+										popup.inline({
+											html: '你改正了，马上自动关闭',
+											autoClose: true,
+											closeIcon: false
+										});
+									}
+								},
+								{
+									name: '不改正',
+									cb: function(popup) {
+										popup.inline({
+											html: '你没改正, 马上自动返回',
+											autoBack: true,
+											closeIcon: false
+										});
+									}
+								}
+							]
+						});
+					},
+					alert: function() {
+						new Popup({
+							html: '你这个做法是错滴，你需要改正？',
+							buttons: [
+								{name: '确定'}
+							]
+						});
+					},
+					tip: function() {
+						new Popup({html: '你这个做法是错滴，你需要改正？', delayTime: 3000});
+					},
+				};
+
 				$(document).on('click', 'button', function() {
 					var id = this.id || 1;
-					new Popup({
-						title: 'luoage#msn.cn',
-						html: base.template(nodes['template' + id].innerHTML)({}),
-						buttons: [
-							{
-								name: '确定',
-								cb: function(popup) {
 
-									popup.inline({
-										close: false,
-										buttons: [
-											{
-												name: 'prev',
-											},
-											{
-												name: 'next',
-												cb: function(popup) {
-													popup.inline({
-														title: '试试中文',
-														html: '开个玩笑 !',
-														close: true,
-														buttons: [
-															{
-																name: 'back'
-															}
-														]
-													});
-												}
-											}
-										],
-										title: 'I am the next',
-										html: 'just a joke !'
-									});
-								}
-							},
-							{
-								name: '取消'
-							}
-						]
-					})
-					.complete(function(_this) {
-						_this.popup.find('.lg-title').on('click', function() {
-							console.log('tst');
-						});
-					});
-
+					obj[id]();
 				});
 
 			});
