@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>time</title>
+		<link rel="stylesheet/less" type="text/css" href="/less/base.less" />
+
+		<script>
+			less = {
+				env: "development"
+			};
+		</script>
+		<script src="/example/less.js"></script>
+		<script src="/example/jquery.min.js"></script>
+		<script src="/example/require.min.js"></script>
+		<style>
+			.test {margin-left: 20px;}
+			.test span {font-size: 12px; color: #666;}
+		</style>
+	</head>
+	<body>
+
+		<div class="test">
+			<p><input type="text" class="lg-time-control" /> <span>默认配置</span></p>
+			<p><input type="text" class="lg-time-control" data-real_time="false"/> <span>不即时显示，需要点击"确定"按钮</span></p>
+			<p><input type="text" class="lg-time-control" data-hastime="false"/> <span>只显示年月日</span></p>
+			<p><input type="text" class="lg-time-control" data-has_second="false"/> <span>不显示秒</span></p>
+			<p><input type="text" class="lg-time-control" data-nicetop="-9"/> <span>距离目标元素9像素</span></p>
+			<p><input type="text" class="lg-time-control" value="2017-01-01 22:22:22" /> <span>存在时间再次显示</span></p>
+		</div>
+
+		<script>
+			less.watch();
+
+			define('jquery', function() {
+				return window.jQuery;
+			});
+
+			require(['../../time', '../../base'], function(Time, base) {
+
+				// 关闭控件
+				$(document).on('click', function(e) {
+					var isTarget = $(e.target).hasClass('lg-time-control');
+
+					if (isTarget) {
+						return;
+					}
+
+					Time.getWrap().remove();
+				});
+
+				// 控件生成
+				$(document).on('click', 'input', function() {
+					var params = {};
+
+					$.each($(this).data(), function(key, value) {
+						key = (key || '').replace(/_([a-z])/g, function(all, b) {
+							return b.toUpperCase();
+						});
+
+						params[key] = value;
+					});
+
+					new Time($.extend({target: this}, params));
+				});
+			});
+		</script>
+	</body>
+</html>

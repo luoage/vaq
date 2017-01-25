@@ -39,6 +39,7 @@
     "max-params": [2, { "max": 5 }],
     "max-statements": [2, { "max": 60 }],
     "newline-after-var":[2, "always"],
+    "no-new": 0,
     "no-tabs":0,
     "indent": [2, "tab", {"SwitchCase": 1}],
     "key-spacing": [2, { "beforeColon": false, "afterColon": true }],

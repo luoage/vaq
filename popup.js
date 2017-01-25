@@ -23,8 +23,9 @@
 	var base = require('./base');
 	var Mask = require('./mask');
 
-	var layout = $('body').addClass('lg-lg-lg');
+	var layout = $('body');
 	var eleHtml = $('html');
+	var body = $('<div>').addClass('lg-popup').addClass('lg-lg-lg');
 
 	var template = ''
 		+ '				<div class="lg-content">'
@@ -48,7 +49,7 @@
 		;
 
 	var options = {
-		target: $('<div>'),
+		css: {},
 		isMask: true,
 		layout: layout,
 		title: '',
@@ -61,23 +62,23 @@
 	};
 
 	var Popup = base.inherit({
-		// 初始化
 		initialize: function(opt) {
 			this.opts = $.extend({}, options, opt);
-
 			this._stack = []; // 弹窗队列, 用于在一个弹窗中切换内容
-			this.addEvent();
 
 			var opts = this.opts;
 
-			opts.target.addClass('lg-popup');
 			eleHtml.addClass('lg-overflow');
 
+			body.css(opts.css);
 			this.helpInline();
 
-			opts.layout.append(opts.target);
+			body.remove();
+			opts.layout.append(body);
+			this.addEvent();
+
 			if (opts.isMask && !opts.mask) {
-				this.mask = new Mask(opts.target, {loading: false}).render();
+				this.mask = new Mask(body, {loading: false}).render();
 			}
 		},
 
@@ -117,7 +118,7 @@
 			var stack = this._stack.pop();
 
 			$.extend(this, stack);
-			this.opts.target.html(stack.target);
+			body.html(stack.target);
 		},
 
 		inline: function(inlineOpts) {
@@ -131,17 +132,15 @@
 		},
 
 		remove: function() {
-			var opts = this.opts;
-
 			this.mask && this.mask.remove();
-			opts.target.remove();
+			body.remove();
 			eleHtml.removeClass('lg-overflow');
 		},
 
 		addEvent: function() {
 			var _this = this;
 
-			this.opts.target.on('click', '.lg-close', function() {
+			body.on('click', '.lg-close', function() {
 				_this.remove();
 			})
 			.on('click', '.lg-buttons>a', function() {
@@ -168,7 +167,7 @@
 			});
 
 			this.target.html(html);
-			this.opts.target.html(this.target);
+			body.html(this.target);
 		}
 
 	});

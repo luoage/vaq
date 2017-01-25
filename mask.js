@@ -4,6 +4,7 @@
  *
  * @dep jquery
  * @example
+ * @TODO 当页面大小发生变化需要做对应的变化
  *
  */
 (function(factory) {
