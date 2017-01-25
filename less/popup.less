@@ -10,6 +10,8 @@ html.lg-overflow{
 }
 
 .lg-popup {
+	.user-select-none();
+
 	z-index: 101;
 	font-size: 12px;
 	overflow-x: hidden;
@@ -53,9 +55,11 @@ html.lg-overflow{
 	}
 
 	.lg-content {
-		color: @render-color;
 		.content-shadow();
 		.border-radius();
+		.user-select-initial();
+
+		color: @render-color;
 
 		vertical-align: middle;
 		border: 1px solid @border-color;

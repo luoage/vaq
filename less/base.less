@@ -5,6 +5,7 @@
 	-khtml-opacity: @value;
 	opacity: @value;
 }
+
 .border-radius(@value: 3px) {
 	border-radius: @value;
 	-ms-border-radius: @value;
@@ -12,6 +13,20 @@
 	-moz-border-radius: @value;
 }
 
+/* no select */
+.user-select-none() {
+	user-select:none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+}
+
+.user-select-initial() {
+	user-select: initial;
+	-webkit-user-select: initial;
+	-ms-user-select: initial;
+	-moz-user-select: initial;
+}
 
 @import './reset';
 @import './popup';

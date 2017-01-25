@@ -65,6 +65,7 @@
 		initialize: function(opt) {
 			this.opts = $.extend({}, options, opt);
 			this._stack = []; // 弹窗队列, 用于在一个弹窗中切换内容
+			this._callback = function() {};
 
 			var opts = this.opts;
 
@@ -110,8 +111,21 @@
 			return $('<div>').addClass('lg-container');
 		},
 
+		always: function(cb) {
+			if (typeof cb === 'function') {
+				this._callback = cb;
+				this._callback(this);
+			}
+
+			return this;
+		},
+
 		complete: function(cb) {
-			typeof cb === 'function' && cb(this);
+			if (typeof cb === 'function') {
+				cb(this);
+			}
+
+			return this;
 		},
 
 		back: function() {
@@ -119,12 +133,18 @@
 
 			$.extend(this, stack);
 			body.html(stack.target);
+
+			this._callback(this);
 		},
 
 		inline: function(inlineOpts) {
+			var target = this.target.clone(true, true);
+
 			this._stack.push({
-				target: this.target.clone(true, true),
-				opts: this.opts
+				target: target,
+				popup: target,
+				opts: this.opts,
+				_callback: this._callback
 			});
 
 			this.opts = $.extend({}, options, inlineOpts);

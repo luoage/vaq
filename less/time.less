@@ -8,12 +8,8 @@
 	/* shadow */
 	box-shadow: 0 0 5px #ccc;
 
-	/* no select */
-	user-select:none;
-	-webkit-user-select: none;
 
-	border-radius: 5px;
-	-webkit-border-radius: 3px;
+	.border-radius();
 
 	width: 28 * 7px;
 	display: inline-block;
@@ -22,7 +18,7 @@
 		background-color: #ccc;
 	}
 	li {
-		border-radius: 2px;
+		.border-radius(2px);
 		cursor: pointer;
 	}
 
