@@ -98,6 +98,10 @@
 											],
 											title: 'I am the next',
 											html: 'just a joke !'
+										}).complete(function(_this) {
+											_this.popup.find('.lg-title').on('click', function() {
+												console.log('joke');
+											});
 										});
 									}
 								},

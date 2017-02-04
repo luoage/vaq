@@ -65,7 +65,6 @@
 		initialize: function(opt) {
 			this.opts = $.extend({}, options, opt);
 			this._stack = []; // 弹窗队列, 用于在一个弹窗中切换内容
-			this._callback = function() {};
 
 			var opts = this.opts;
 
@@ -111,15 +110,6 @@
 			return $('<div>').addClass('lg-container');
 		},
 
-		always: function(cb) {
-			if (typeof cb === 'function') {
-				this._callback = cb;
-				this._callback(this);
-			}
-
-			return this;
-		},
-
 		complete: function(cb) {
 			if (typeof cb === 'function') {
 				cb(this);
@@ -129,30 +119,35 @@
 		},
 
 		back: function() {
+			this.target.remove();
+
 			var stack = this._stack.pop();
 
 			$.extend(this, stack);
-			body.html(stack.target);
 
-			this._callback(this);
+			this.target.show();
 		},
 
 		inline: function(inlineOpts) {
-			var target = this.target.clone(true, true);
+			var target = this.target;
+
+			target.hide();
 
 			this._stack.push({
 				target: target,
 				popup: target,
-				opts: this.opts,
-				_callback: this._callback
+				opts: this.opts
 			});
 
 			this.opts = $.extend({}, options, inlineOpts);
 			this.helpInline();
+
+			return this;
 		},
 
 		remove: function() {
 			this.mask && this.mask.remove();
+			body.html('');
 			body.remove();
 			eleHtml.removeClass('lg-overflow');
 		},
@@ -187,7 +182,7 @@
 			});
 
 			this.target.html(html);
-			body.html(this.target);
+			body.append(this.target);
 		}
 
 	});
