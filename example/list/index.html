@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>list</title>
+		<link rel="stylesheet/less" type="text/css" href="/less/base.less" />
+
+		<script>
+			less = {
+				env: "development",
+				poll: 3000
+			};
+		</script>
+		<script src="/example/less.js"></script>
+
+		<script src="/example/jquery.min.js"></script>
+		<script src="/example/require.min.js"></script>
+	</head>
+	<body>
+
+		<form node-type="form">
+			t1: <input type="text" name="t1">
+			t2: <input type="text" name="t2">
+		</form>
+		<br />
+
+		<div id="list" node-type="list"></div>
+
+		<script>
+			less.watch();
+
+			define('jquery', function() {
+				return window.jQuery;
+			});
+
+			require(['../../list', '../../base', '../../form', 'jquery'],
+				function(List, base, form, $) {
+					var nodes = base.getNodes();
+
+					var columns = [
+						{title: '昵称', field: 'name'},
+						{title: '性别', field: 'sex'},
+						{title: '年龄', field: 'age'},
+						{title: '爱好', field: 'favourite'},
+						{title: '其他', field: 'opt', escape: false},
+					];
+
+					var list = new List({
+						setQuery: function() {
+							var obj = $(nodes.form).formObj();
+
+							return obj;
+						},
+						container: nodes.list,
+						columns: columns,
+						page: 1,
+						perpage: 10,
+						ajaxOpts: {url: 'list.json'}
+					});
+
+					list.render();
+				});
+		</script>
+	</body>
+</html>

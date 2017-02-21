@@ -1,8 +1,11 @@
+/* @browser: '-webkit-', '-ms-', '-moz-', '-o-'; */
+
 .opacity(@value){
 	@valueTmp: @value * 100;
 	filter:alpha(opacity=@valueTmp);
 	-moz-opacity: @value;
-	-khtml-opacity: @value;
+	-webkit-opacity: @value;
+	-o-opacity: @value;
 	opacity: @value;
 }
 
@@ -13,22 +16,32 @@
 	-moz-border-radius: @value;
 }
 
+.user-select(@value) {
+	-webkit-user-select: @value;
+	-o-user-select: @value;
+	-ms-user-select: @value;
+	-moz-user-select: @value;
+}
+
 /* no select */
 .user-select-none() {
-	user-select:none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	-moz-user-select: none;
+	.user-select(none);
 }
 
 .user-select-initial() {
-	user-select: initial;
-	-webkit-user-select: initial;
-	-ms-user-select: initial;
-	-moz-user-select: initial;
+	.user-select(initial);
+}
+
+.box-sizing(@value){
+	box-sizing: @value;
+	-webkit-box-sizing: @value;
+	-o-box-sizing: @value;
+	-moz-box-sizing: @value;
+	-ms-box-sizing: @value;
 }
 
 @import './reset';
 @import './popup';
 @import './mask';
 @import './time';
+@import './list';

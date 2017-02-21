@@ -1,5 +1,5 @@
 /**
- * by jl
+ * by luoage@msn.cn
  *
  * [suggestvalue], [suggestname] 作为suggest的值和名称，所以就算是input元素也不需要name
  *
@@ -25,13 +25,11 @@
 		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
 	}
 })(function(require) {
-	var $ = require('jquery');
-	var base = require('lib/base');
-	var Scroll = require('lib/scroll');
-	var keyboard = require('lib/keyboard');
-	var observe = require('lib/observe');
-	var Seq = require('lib/seq');
-	var request = require('./request');
+	var base = require('./base');
+	var Scroll = require('./scroll');
+	var keyboard = require('./keyboard');
+	var observe = require('./observe');
+	var Seq = require('./seq');
 
 	var $div = $('<div class="suggest"></div>');
 	var cacheObj = {};
@@ -43,13 +41,6 @@
 	 * @return void
 	 */
 	var Suggest = base.inherit().$extend({
-		initialize: function(target) {
-			this.index = -1;
-
-			this.init(target);
-			this.bindEvent();
-		},
-
 		init: function(target) {
 			this.index = -1;
 
@@ -69,7 +60,7 @@
 		},
 
 		getTarget: function() {
-			return this.target.get(0);
+			return this.target && this.target.get(0);
 		},
 
 		css: function() {
@@ -107,10 +98,39 @@
 			this.scroll = new Scroll(this.div.find('[wheel="true"]'), {slide: false, iosSupport: true});
 		},
 
-		getData: base.debounce(function(data) {
+		inputInit: function(target) {
+			var $target = $(target);
+			var data = $target.data();
+			var value = $target.attr('suggestvalue');
+
+			if (!value) {
+				return;
+			}
+
+			this.request(data, value)
+				.seq(function(list) {
+					list = list || [];
+
+					if (list.length !== 1) { // @TODO 这里可以使用options, 目前只针对精确查找
+						return;
+					}
+
+					var display = list && list[0] && list[0].display;
+
+					if (!display) {
+						return;
+					}
+
+					$target
+						.val(base.escapeHtml(display))
+						.attr('suggestvalue', value);
+				})
+				.resolve();
+		},
+
+		request: function(data, value) {
 			var requestData = base.copy(data) || {};
 			var url = requestData.url;
-			var value = this.target.val();
 
 			delete requestData.url;
 
@@ -119,22 +139,34 @@
 			}
 
 			var sign = url + $.param(requestData);
-			var _this = this;
 
-			new Seq()
+			return new Seq()
 				.seq(function() {
-					if (typeof cacheObj[sign] !== 'undefined') {
-						return this(cacheObj[sign]);
-					} else {
-						request({url: url, data: requestData}, this);
-					}
+					return cacheObj[sign] !== undefined
+						? this(cacheObj[sign])
+						: base.request({url: url, data: requestData}, this);
 				})
 				.seq(function(list) {
-					_this.setContent(list);
 					cacheObj[sign] = list;
+
+					this(list);
+				});
+		},
+
+		getData: base.debounce(function(data) {
+			var value = this.target.val();
+			var _this = this;
+
+			this.request(data, value)
+				.seq(function(list) {
+					_this.setContent(list);
 				})
 				.resolve();
 		}, 200),
+
+		setInputValue: function(input, value, suggestvalue) {
+			input.val(value).attr('suggestvalue', suggestvalue);
+		},
 
 		/**
 		 * 设置target元素的内容
@@ -155,21 +187,13 @@
 
 		bindEvent: function() {
 			var _this = this;
-			var resize = base.debounce(function() {
-				$div.css(_this.css());
-			}, 50);
-
-			$(window).on('resize', resize)
-				.on('click', function(e, preventHide) {
-					preventHide || $div.hide();
-				});
 
 			$div.on('click', 'p', function(e) {
 				$(this).addClass('bg-gray').siblings().removeClass('bg-gray');
 				_this.setValue(this);
 				_this.scroll.scrollTo(this);
 				_this.target.trigger('focus');
-				observe.publish('set-suggest-input-value', this);
+				observe.publish('set-suggest-input-value', this, _this.target);
 			});
 		},
 
@@ -200,15 +224,13 @@
 
 
 	var selector = '.suggest-input';
-	var suggest;
+	var suggest = new Suggest();
 	var timer;
 
+	suggest.bindEvent();
+
 	var fn = base.debounce(function() {
-		if (!suggest) {
-			suggest = new Suggest(this);
-		} else {
-			suggest.init(this);
-		}
+		suggest.init(this);
 	}, 50);
 
 	$(document).on('input', selector, function(e) {

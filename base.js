@@ -65,7 +65,9 @@
 				return proto[name];
 			};
 
-			F.$extend = base.curry(base.inherit, F);
+			F.$extend = function(obj) {
+				return base.inherit(obj, F);
+			};
 
 			return F;
 		},
@@ -378,6 +380,71 @@
 			});
 
 			return newObj;
+		},
+
+		/**
+		 * 获取obj的键值
+		 *
+		 * @param {object} 对象
+		 * @param {string} 获取的键支持点操作
+		 * @param {mixed} 数值不存在则默认值
+		 *
+		 * @param {mixed}
+		 */
+		get: function(obj, key, defaultValue) {
+			var keys = key.split('.');
+			var length = keys.length;
+			var i = 0;
+			var result = obj;
+
+			while (i < length) {
+				try {
+					result = result[keys[i++]];
+				} catch (e) {
+					return defaultValue;
+				}
+			}
+
+			return result === undefined ? defaultValue : result;
+		},
+
+		/**
+		 * 合并请求
+		 *
+		 * @param {string|object}
+		 * @param {object} 对象
+		 * @return {string} 字符串
+		 */
+		param: function(query, params) {
+			query = typeof query === 'string' ? query : $.param(query || {});
+			query = $.trim(query || '').replace(/(?:(\?|&))+$/, '');
+
+			var arr = query ? [query] : [];
+
+			if (params && typeof params === 'object' && !$.isEmptyObject(params)) {
+				arr.push($.param(params));
+			}
+
+			return arr.join('&');
+		},
+
+		/**
+		 * 生成url
+		 * @param {string}
+		 * @param {object}
+		 *
+		 * @return {string} url
+		 */
+		url: function(url, params) {
+			url = $.trim(url || '').replace(/(?:(\?|&))+$/, '');
+
+			var arr = [url];
+
+			if (!$.isEmptyObject(params)) {
+				arr.push(this.param('', params));
+			}
+
+			return arr.join(url.indexOf('?') > -1 ? '&' : '?');
 		}
 	};
 

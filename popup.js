@@ -19,13 +19,26 @@
 		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
 	}
 })(function(require) {
+	var Mask = require('./mask');
 	var $ = require('jquery');
 	var base = require('./base');
-	var Mask = require('./mask');
 
 	var layout = $('body');
 	var eleHtml = $('html');
 	var body = $('<div>').addClass('lg-popup').addClass('lg-lg-lg');
+
+	var getItemByName = function(buttons, name) {
+		var item;
+
+		(buttons || []).some(function(button) {
+			if (button.name === name) {
+				item = button;
+				return true;
+			}
+		});
+
+		return item;
+	};
 
 	var template = ''
 		+ '				<div class="lg-content">'
@@ -98,9 +111,7 @@
 				base.delay(function() {
 					this.remove();
 				}.bind(this), opts.delayTime)();
-			}
-
-			if (opts.autoBack === true) {
+			} else if (opts.autoBack === true) {
 				base.delay(function() {
 					this.back();
 				}.bind(this), opts.delayTime)();
@@ -173,18 +184,13 @@
 			.on('click', '.lg-buttons>a', function() {
 				var name = $(this).data('name');
 				var opts = _this.opts;
+				var opt = getItemByName(opts.buttons, name);
 
-				opts.buttons.some(function(opt) {
-					if (opt.name !== name) {
-						return false;
-					}
+				var result = opt.cb ? opt.cb(_this) : undefined;
 
-					var result = opt.cb ? opt.cb(_this) : undefined;
-
-					if (opt.cb === undefined || result === true) {
-						_this._stack.length ? _this.back() : _this.remove();
-					}
-				});
+				if (opt.cb === undefined || result === true) {
+					_this._stack.length ? _this.back() : _this.remove();
+				}
 			});
 		},
 

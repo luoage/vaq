@@ -1,0 +1,48 @@
+.lg-table-list {
+	@border-color: #ccc;
+	@font-size: 12px;
+
+	table {
+		width: 100%;
+		text-align: center;
+		border: 1px solid @border-color;
+	}
+
+	.lg-pagination {
+		margin-top: 10px;
+		font-size: @font-size;
+
+		.lg-pagination-detail {
+			margin-top: 10px;
+			float: left;
+		}
+
+		ul {
+			.border-radius(3px);
+			.user-select-none();
+			float: right;
+			display: inline-block;
+			border: 1px solid @border-color;
+
+			li {
+				width: 28px;
+				height: 28px;
+				line-height: 28px;
+				border-right: 1px solid @border-color;
+				text-align: center;
+				float: left;
+				cursor: pointer;
+			}
+
+			li.lg-pagination-active {
+				color: white;
+				cursor: default;
+				background-color: @border-color;
+			}
+
+			&>:last-child {
+				border-right: none;
+			}
+		}
+	}
+}

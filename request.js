@@ -76,5 +76,5 @@
 		};
 	};
 
-	return request;
+	return request();
 });
