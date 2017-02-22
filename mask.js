@@ -20,6 +20,8 @@
 		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
 	}
 })(function(require) {
+	var $ = require('jquery');
+
 	var Mask = function(target, _config) {
 		this.mask = $('<div>');
 		this.config = {};

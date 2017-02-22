@@ -31,9 +31,9 @@
 	var base = require('./base');
 	var Seq = require('./seq');
 	var request = require('./request');
-	var Mask = require('./mask');
 
 	var options = {
+		container: undefined, // 容器，必填 {node|HTMLElement}
 		page: 1, // 默认从第一页开始
 		perpage: 10, // 每个页面的个数
 		ajaxOpts: {},
@@ -44,7 +44,7 @@
 	var template = ''
 		+ '<div class="lg-table-wrap lg-lg-lg">'
 		+ '<div class="lg-table-list">'
-		+ '	<table>'
+		+ '	<table cellpadding="0" cellspacing="0" border="0">'
 		+ '		<thead>'
 		+ '			<tr>'
 		+ '				<[ opts.columns.forEach(function(item) { ]>'
@@ -67,10 +67,10 @@
 		+ '	</table>'
 		+ '</div>'
 		+ '	<div class="lg-pagination">'
+		+ '		<[ if (+pagination.total) {]>'
 		+ '		<p class="lg-pagination-detail">'
 		+ '			显示第 <[- pagination.from ]>-<[- pagination.to ]> 条记录, 每页 <[- opts.perpage ]> 条, 共 <[- pagination.total ]> 条'
 		+ '		</p>'
-		+ '		<[ if (+pagination.total) {]>'
 		+ '		<ul>'
 		+ '			<[ if (pagination.page > 1 ) { ]>'
 		+ '			<li data-page="<[- pagination.page - 1 ]>" >&lt;</li>'
@@ -91,6 +91,8 @@
 		+ '			<li data-page="<[- pagination.page + 1 ]>" >&gt;</li>'
 		+ '			<[ } ]>'
 		+ '		</ul>'
+		+ '		<[ } else { ]>'
+		+ '			<p class="lg-empty">暂无数据 !</p>'
 		+ '		<[ } ]>'
 		+ '	</div>'
 		+ '</div>';

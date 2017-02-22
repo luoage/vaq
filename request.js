@@ -1,3 +1,8 @@
+/**
+ * ajax请求
+ *
+ * @author luoage@msn.cn
+ */
 (function(factory) {
 	// CommonJs
 	if (typeof exports === 'object' && typeof module === 'object') {

@@ -91,7 +91,7 @@
 			opts.layout.append(body);
 			this.addEvent();
 
-			if (opts.isMask && !opts.mask) {
+			if (opts.isMask && !this.mask) {
 				this.mask = new Mask(body, {loading: false}).render();
 			}
 		},
@@ -143,6 +143,10 @@
 			this.target.remove();
 
 			var stack = this._stack.pop();
+
+			if (!stack) {
+				return;
+			}
 
 			$.extend(this, stack);
 
