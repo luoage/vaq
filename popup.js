@@ -76,6 +76,9 @@
 
 	var Popup = base.inherit({
 		initialize: function(opt) {
+			if (body.data('popup')) {
+				return body.data('popup').inline($.extend({}, options, opt));
+			}
 			this.opts = $.extend({}, options, opt);
 			this._stack = []; // 弹窗队列, 用于在一个弹窗中切换内容
 			this._callback = function() {};
@@ -181,6 +184,8 @@
 
 		addEvent: function() {
 			var _this = this;
+
+			body.data('popup', this);
 
 			body.on('click', '.lg-close', function() {
 				_this.remove();
