@@ -4,15 +4,26 @@
  * 获取form或者任意标签中的表单值
  * @TODO 兼容 suggest
  * 支持多个form合并获取值
- * @example
  *
+ * @example
  * $('...').formObj() // key-value Object
  * $('...').formStr() // url type string
  * $('...').form() // Array
  *
  */
+(function(factory) {
+	// CommonJs
+	if (typeof exports === 'object' && typeof module === 'object') {
+		module.exports = factory(require);
+	// requirejs
+	} else if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else {
+		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
+	}
+})(function(require) {
+	require('./jquery.clone');
 
-define(function(require) {
 	var $ = require('jquery');
 	var jQuery = $;
 	var rCRLF = /\r?\n/g;
@@ -20,36 +31,6 @@ define(function(require) {
 	var rsubmittable = /^(?:input|select|textarea|keygen)/i;
 	var rcheckableType = (/^(?:checkbox|radio)$/i);
 	var suggest = 'suggest-input';
-
-	// 重写clone, 修复select, textarea 值clone丢失的问题
-	((function(original) {
-		jQuery.fn.clone = function() {
-			var result = original.apply(this, arguments);
-
-			var myTextareas = this.find('textarea').add(this.filter('textarea'));
-			var resultTextareas = result.find('textarea').add(result.filter('textarea'));
-
-			var mySelects = this.find('select').add(this.filter('select'));
-			var resultSelects = result.find('select').add(result.filter('select'));
-
-			var i = 0;
-			var l = myTextareas.length;
-
-			for (; i < l; ++i) {
-				$(resultTextareas[i]).val($(myTextareas[i]).val());
-			}
-
-			i = 0;
-			l = mySelects.length;
-
-			for (; i < l; ++i) {
-				resultSelects[i].selectedIndex = mySelects[i].selectedIndex;
-			}
-
-			return result;
-		};
-	})(jQuery.fn.clone));
-
 
 	var _form = function(enableBaseLine, supportEmptyValue, trimSpace) {
 		enableBaseLine = enableBaseLine === undefined ? false : enableBaseLine;
