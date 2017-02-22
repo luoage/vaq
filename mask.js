@@ -1,10 +1,12 @@
 /**
- * 遮罩
- * @author luoage@msn.cn
+ * by luoage@msn.cn
  *
- * @dep jquery
+ * 遮罩
+ *
  * @example
- * @TODO 当页面大小发生变化需要做对应的变化
+ * var mask = $('..').mask(); // 生成遮罩
+ * mask.render(); // 遮罩生效
+ * mask.remove();
  *
  */
 (function(factory) {
@@ -18,43 +20,46 @@
 		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
 	}
 })(function(require) {
-	var $ = require('jquery');
-
-	var mask = $('<div>').addClass('lg-mask').addClass('lg-lg-lg');
-	var config = {
-		loading: true, // 是否增加背景loading图片
-		layout: $('body'),
-		css: {
-			zIndex: 100
-		},
-		setPos: true
-	};
-
-	/**
-	 * @constructor
-	 */
 	var Mask = function(target, _config) {
+		this.mask = $('<div>');
 		this.config = {};
 
+		var config = {
+			loading: true, // 是否增加背景loading图片
+			layout: $('body'),
+			css: {
+				zIndex: 100
+			},
+			setPos: true
+		};
+
 		$.extend(this.config, config, _config);
+
+		var mask = this.mask;
+
 		// 遮罩层
-		this._mask = mask.css(this.config.css);
-		this.config.loading && this._mask.addClass('lg-ajax-loading');
+		mask.addClass('lg-mask').addClass('lg-lg-lg').css(this.config.css);
+
+		this.config.loading && mask.addClass('lg-ajax-loading');
+
 		this.target = target;
 	};
 
 
 	Mask.prototype = {
 		render: function() {
-			this._mask.css(this._size());
-			this.config.setPos && this._mask.css(this._position());
-			this.config.layout.append(this._mask);
+			var mask = this.mask;
+			var config = this.config;
+
+			mask.css(this._size());
+			config.setPos && mask.css(this._position());
+			config.layout.append(mask);
 
 			return this;
 		},
 
 		remove: function() {
-			this._mask.remove();
+			this.mask.remove();
 
 			return this;
 		},

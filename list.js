@@ -31,12 +31,14 @@
 	var base = require('./base');
 	var Seq = require('./seq');
 	var request = require('./request');
+	var Mask = require('./mask');
 
 	var options = {
 		page: 1, // 默认从第一页开始
 		perpage: 10, // 每个页面的个数
 		ajaxOpts: {},
-		columns: []
+		columns: [],
+		mask: true
 	};
 
 	var template = ''
@@ -261,8 +263,15 @@
 		},
 
 		request: function() {
+			var opts = this.opts;
 			var _this = this;
 			var ajaxOpts = this.query();
+
+			if (opts.mask) {
+				ajaxOpts.mask = {
+					target: $(opts.container)
+				};
+			}
 
 			return new Seq()
 				.seq(function() {

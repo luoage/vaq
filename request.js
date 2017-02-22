@@ -47,7 +47,7 @@
 			var mask;
 
 			if (options.mask) {
-				mask = new Mask(options.mask.target).mask(options.mask).render();
+				mask = new Mask(options.mask.target, options.mask).render();
 
 				delete options.mask;
 			}

@@ -50,7 +50,9 @@
 							columns: columns,
 							page: 1,
 							perpage: 10,
-							ajaxOpts: {url: 'list.json'},
+							ajaxOpts: {
+								url: 'list.json'
+							},
 						})
 						.setQuery(function() {
 							var obj = $(nodes.form).formObj();
