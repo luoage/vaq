@@ -204,7 +204,7 @@
 					var value = base.get(obj, column.field);
 
 					item[column.field] = value !== undefined && value !== null
-						? (column.escape ? base.escapeHtml(value) : value)
+						? ((column.escape || column.escape === undefined) ? base.escapeHtml(value) : value)
 						: '';
 				});
 
