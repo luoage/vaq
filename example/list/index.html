@@ -38,25 +38,33 @@
 
 					var columns = [
 						{title: '昵称', field: 'name'},
+						{title: '手机号', field: 'mobile', escape: false},
 						{title: '性别', field: 'sex'},
 						{title: '年龄', field: 'age'},
 						{title: '爱好', field: 'favourite'},
-						{title: '其他', field: 'opt', escape: false},
+						{title: '其他', field: 'opt', escape: false}
 					];
 
 					var list = new List({
-						setQuery: function() {
+							container: nodes.list,
+							columns: columns,
+							page: 1,
+							perpage: 10,
+							ajaxOpts: {url: 'list.json'},
+						})
+						.setQuery(function() {
 							var obj = $(nodes.form).formObj();
 
 							return obj;
-						},
-						container: nodes.list,
-						columns: columns,
-						page: 1,
-						perpage: 10,
-						ajaxOpts: {url: 'list.json'}
-					});
+						})
+						.setParse(function(list) {
+							list.forEach(function(item) {
+								item.opt = '<a href="#">operation</a>';
+							});
+							return list;
+						});
 
+					// 生成list和pagination内容
 					list.render();
 				});
 		</script>

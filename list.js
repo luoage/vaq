@@ -1,6 +1,5 @@
 /**
  * 分页
- *
  * @author jl
  *
  * @example
@@ -17,7 +16,6 @@
  * 	}
  * }
  */
-
 (function(factory) {
 	// CommonJs
 	if (typeof exports === 'object' && typeof module === 'object') {
@@ -38,12 +36,12 @@
 		page: 1, // 默认从第一页开始
 		perpage: 10, // 每个页面的个数
 		ajaxOpts: {},
-		columns: [],
-		setQquery: function() {} // query callback
+		columns: []
 	};
 
 	var template = ''
-		+ '<div class="lg-table-list lg-lg-lg">'
+		+ '<div class="lg-table-wrap lg-lg-lg">'
+		+ '<div class="lg-table-list">'
 		+ '	<table>'
 		+ '		<thead>'
 		+ '			<tr>'
@@ -65,6 +63,7 @@
 		+ '			<[ }) ]>'
 		+ '		</tbody>'
 		+ '	</table>'
+		+ '</div>'
 		+ '	<div class="lg-pagination">'
 		+ '		<p class="lg-pagination-detail">'
 		+ '			显示第 <[- pagination.from ]>-<[- pagination.to ]> 条记录, 每页 <[- opts.perpage ]> 条, 共 <[- pagination.total ]> 条'
@@ -98,6 +97,10 @@
 		initialize: function(opts) {
 			this.opts = $.extend({}, options, opts);
 			this.page = this.opts.page;
+			this._query = function() {};
+			this._parse = function(list) {
+				return list;
+			};
 
 			this.addListener();
 		},
@@ -164,12 +167,12 @@
 			var array = this._pagination(page, totalPage);
 
 			return {
-				page: this.page,
+				page: page,
 				total: total,
 				totalPage: Math.ceil(total / opts.perpage),
 				pageArray: array,
-				from: (pagination.page - 1) * opts.perpage + 1,
-				to: pagination.page * opts.perpage
+				from: (page - 1) * opts.perpage + 1,
+				to: Math.min(page * opts.perpage, total)
 			};
 		},
 
@@ -222,6 +225,18 @@
 				.resolve();
 		},
 
+		setQuery: function(cb) {
+			typeof cb === 'function' && (this._query = cb);
+
+			return this;
+		},
+
+		setParse: function(cb) {
+			typeof cb === 'function' && (this._parse = cb);
+
+			return this;
+		},
+
 		/**
 		 * 设置请求参数
 		 *
@@ -239,7 +254,7 @@
 				});
 			}
 
-			var data = opts.setQuery();
+			var data = this._query();
 
 			ajaxOpts.data = base.param(ajaxOpts.data, data);
 			return ajaxOpts;
@@ -256,7 +271,10 @@
 				.seq(function(info) {
 					info = info || {};
 
-					var list = _this.build(info.list);
+					var list = info.list || [];
+
+					list = _this.build(_this._parse(list));
+
 					var pagination = info.pagination || {};
 
 					_this.page = pagination.page;

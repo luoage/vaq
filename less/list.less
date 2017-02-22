@@ -1,11 +1,46 @@
-.lg-table-list {
+.lg-table-wrap {
 	@border-color: #ccc;
 	@font-size: 12px;
+
+	.lg-table-list {
+		.border-radius(3px);
+		overflow: auto;
+	}
 
 	table {
 		width: 100%;
 		text-align: center;
-		border: 1px solid @border-color;
+		border-top: 1px solid @border-color;
+		border-left: 1px solid @border-color;
+
+		tr {
+			/*background-color: #ffffff;*/
+			border-bottom: 1px solid @border-color;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f4f4f4;
+		}
+
+		tr:nth-child(odd) {
+			background-color: #ffffff;
+		}
+
+		/*
+		tr:hover {
+			background-color: #f4f4f4;
+		}
+		*/
+
+		th {
+			background-color: @border-color;
+    	white-space: nowrap;
+		}
+
+		td, th {
+			padding: 8px;
+			border-right: 1px solid @border-color;
+		}
 	}
 
 	.lg-pagination {

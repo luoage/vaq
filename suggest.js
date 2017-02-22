@@ -25,6 +25,7 @@
 		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
 	}
 })(function(require) {
+	var $ = require('jquery');
 	var base = require('./base');
 	var Scroll = require('./scroll');
 	var keyboard = require('./keyboard');

@@ -1,3 +1,8 @@
+/**
+ * 基础方法
+ *
+ * @author luoage@msn.cn
+ */
 (function(factory) {
 	// CommonJs
 	if (typeof exports === 'object' && typeof module === 'object') {
