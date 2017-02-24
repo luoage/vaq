@@ -148,6 +148,7 @@
 			var stack = this._stack.pop();
 
 			if (!stack) {
+				this.remove();
 				return;
 			}
 

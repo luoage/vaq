@@ -38,7 +38,8 @@
 		perpage: 10, // 每个页面的个数
 		ajaxOpts: {},
 		columns: [],
-		isMask: true
+		isMask: true,
+		maskOpts: {}
 	};
 
 	var template = ''
@@ -270,9 +271,9 @@
 			var ajaxOpts = this.query();
 
 			if (opts.isMask) {
-				ajaxOpts.mask = {
+				ajaxOpts.mask = $.extend({
 					target: $(opts.container)
-				};
+				}, opts.maskOpts);
 			}
 
 			return new Seq()
