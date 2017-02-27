@@ -70,6 +70,10 @@
 								item.opt = '<a href="#">operation</a>';
 							});
 							return list;
+						})
+						.recolumn(function(column) {
+							column.nowrap = true;
+							return column;
 						});
 
 					// 生成list和pagination内容

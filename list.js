@@ -4,7 +4,6 @@
  *
  * @example
  * 接口返回数据格式
- *
  * {
  * 	code: 0,
  * 	info: {
@@ -15,6 +14,13 @@
  * 		}
  * 	}
  * }
+ *
+ * column字段约定
+ * [
+ *	{title:, field:, escape:, nowrap:}
+ * ]
+ *
+ * new list({opts}).setQuery().recolumn
  */
 (function(factory) {
 	// CommonJs
@@ -60,7 +66,7 @@
 		+ '					opts.columns.forEach(function(column) { '
 		+ '					var value = record[column.field];'
 		+ '				]>'
-		+ '				<td><[- value === undefined ? \'\' : value ]></td>'
+		+ '				<td <[- column.nowrap ? \'class="lg-white-space-nowrap"\' : \'\' ]> ><[- value === undefined ? \'\' : value ]></td>'
 		+ '				<[ }) ]>'
 		+ '			</tr>'
 		+ '			<[ }) ]>'
@@ -105,6 +111,9 @@
 			this._query = function() {};
 			this._parse = function(list) {
 				return list;
+			};
+			this._resetcolumn = function(column) {
+				return column;
 			};
 
 			this.addListener();
@@ -215,6 +224,21 @@
 			return _list;
 		},
 
+		recolumn: function(cb) {
+			typeof cb === 'function' && (this._resetcolumn = cb);
+
+			return this;
+		},
+
+		_recolumn: function() {
+			var columns = this.opts.columns || [];
+			var _this = this;
+
+			return (columns || []).map(function(column) {
+				return $.extend({}, _this._resetcolumn(column));
+			});
+		},
+
 		/**
 		 * 渲染记录
 		 *
@@ -222,6 +246,11 @@
 		 */
 		render: function() {
 			var _this = this;
+			var opts = this.opts;
+
+			if (opts.columns) {
+				opts.columns = this._recolumn();
+			}
 
 			this.request()
 				.seq(function(list, pagination) {
