@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>img viewer</title>
+		<link rel="stylesheet/less" type="text/css" href="/less/base.less" />
+
+		<script>
+			less = {
+				env: "development"
+			};
+		</script>
+		<script src="/example/less.js"></script>
+		<script src="/example/jquery.min.js"></script>
+		<script src="/example/require.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.normal img {
+				width: 550px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="normal">
+			<img src="imgs/4.jpg" data-src="imgs/1.jpg" >
+			<img src="imgs/4.jpg">
+			<img src="imgs/2.jpg">
+			<img src="imgs/3.jpg">
+		</div>
+		<script>
+			less.watch();
+
+			define('jquery', function() {
+				return window.jQuery;
+			});
+
+			require(['../../viewer'], function(Viewer, base) {
+				var imgs = $('img');
+
+				new Viewer({
+					target: imgs,
+					wheelKey: false,
+					closeIcon: false,
+					leftRightKey: false,
+					imgAttr: 'data-src'
+				}).render();
+			});
+		</script>
+	</body>
+</html>

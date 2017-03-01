@@ -1,9 +1,7 @@
 /**
- * by jl
+ * 时间控件
  *
- * @TODO 还需要改进
- *
- * @example
+ * @author luoage@msn.cn
  */
 (function(factory) {
 	// CommonJs

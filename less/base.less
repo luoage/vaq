@@ -32,7 +32,7 @@
 	.user-select(initial);
 }
 
-.box-sizing(@value){
+.box-sizing(@value) {
 	box-sizing: @value;
 	-webkit-box-sizing: @value;
 	-o-box-sizing: @value;
@@ -40,8 +40,13 @@
 	-ms-box-sizing: @value;
 }
 
+html.lg-overflow {
+	overflow: hidden !important;
+}
+
 @import './reset';
 @import './popup';
 @import './mask';
 @import './time';
 @import './list';
+@import './viewer';
