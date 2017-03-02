@@ -48,7 +48,7 @@
 		wheelKey: true, // 鼠标滑轮滚动图片缩放
 		leftRightKey: true, // 左右按键切换图片
 		loadingIcon: true, // loading图片
-		imgAttr: '' // 使用什么属性获取图片链接
+		targetAttr: '' // 使用什么属性获取图片链接
 	};
 
 	var toolbarTemplate = ''
@@ -96,7 +96,7 @@
 		image: function(target) {
 			var img = new Image();
 
-			img.src = this.opts.imgAttr && $(target).attr(this.opts.imgAttr) || target.src;
+			img.src = this.opts.targetAttr && $(target).attr(this.opts.targetAttr) || target.src;
 
 			return img;
 		},
