@@ -2,12 +2,6 @@
  * 图片查看器
  *
  * @author luoage@msn.cn
- *
- * @TODO 对图片列表做瘦身, 这样显得会更规则
- * @TODO 旋转平滑，显示平滑，缩放平滑，反转平滑
- * @TODO 左右点击切换图片
- * @TODO 窗口调整
- *
  */
 (function(factory) {
 	// CommonJs
@@ -42,13 +36,17 @@
 
 	var options = {
 		pointer: 0, // 从第一个开始处理
-		scale: 0.05, // 每次操作的缩放比例
 		escKey: true, // esc操作关闭
 		closeIcon: true, // 显示关闭按钮
 		wheelKey: true, // 鼠标滑轮滚动图片缩放
 		leftRightKey: true, // 左右按键切换图片
 		loadingIcon: true, // loading图片
-		targetAttr: '' // 使用什么属性获取图片链接
+		targetAttr: '', // 使用什么属性获取图片链接
+		rotate: 3, // 1ms的旋转角度
+		reverseHorizontal: 0.05, // 水平旋转
+		reverseVertical: 0.05, // 水平旋转
+		scale: 0.05, // 缩放比例
+		toolbar: true, // 显示工具栏
 	};
 
 	var toolbarTemplate = ''
@@ -136,7 +134,7 @@
 
 			layout.append(this.close);
 			layout.append(this.represent);
-			layout.append(this.toolbar);
+			this.opts.toolbar && layout.append(this.toolbar);
 			layout.append(bottom);
 
 			body.append(layout);
@@ -318,37 +316,67 @@
 		},
 
 		rotateLeftImg: function() {
-			var rotateAngle = this.rotateAngle + 90;
+			var interval = setInterval(function() {
+				this.rotateAngle += this.opts.rotate;
 
-			this.rotateAngle = rotateAngle % 360;
-			this._transform(function(image) {
-				return this.fixTransform();
-			});
+				this._transform(function(image) {
+					return this.fixTransform();
+				});
+
+				if (this.rotateAngle % 90 === 0) {
+					this.rotateAngle = this.rotateAngle % 360;
+					clearInterval(interval);
+					return;
+				}
+			}.bind(this), 1);
 		},
 
 		rotateRightImg: function() {
-			var rotateAngle = this.rotateAngle - 90;
+			var interval = setInterval(function() {
+				this.rotateAngle -= this.opts.rotate;
 
-			this.rotateAngle = rotateAngle % 360;
-			this._transform(function(image) {
-				return this.fixTransform();
-			});
+				this._transform(function(image) {
+					return this.fixTransform();
+				});
+
+				if (this.rotateAngle % 90 === 0) {
+					this.rotateAngle = this.rotateAngle % 360;
+					clearInterval(interval);
+					return;
+				}
+			}.bind(this), 1);
 		},
 
 		flipHorizontalImg: function() {
-			this.horizontal *= -1;
+			var interval = setInterval(function() {
+				this.horizontal -= this.opts.reverseHorizontal;
 
-			this._transform(function(image) {
-				return this.fixTransform();
-			});
+				if (Math.abs(this.horizontal.toFixed(1)) === 1) {
+					this.opts.reverseHorizontal *= -1;
+					clearInterval(interval);
+					return;
+				}
+
+				this._transform(function(image) {
+					return this.fixTransform();
+				});
+			}.bind(this), 1);
 		},
 
 		flipVerticalImg: function() {
-			this.vertical *= -1;
+			var interval = setInterval(function() {
+				this.vertical -= this.opts.reverseVertical;
 
-			this._transform(function(image) {
-				return this.fixTransform();
-			});
+				if (Math.abs(this.vertical.toFixed(1)) === 1) {
+					this.opts.reverseVertical *= -1;
+					clearInterval(interval);
+					return;
+				}
+
+				this._transform(function(image) {
+					return this.fixTransform();
+				});
+			}.bind(this), 1);
 		},
 
 		/**
