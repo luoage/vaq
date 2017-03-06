@@ -46,7 +46,7 @@
 		reverseHorizontal: 0.05, // 水平旋转
 		reverseVertical: 0.05, // 水平旋转
 		scale: 0.05, // 缩放比例
-		toolbar: true, // 显示工具栏
+		toolbar: true // 显示工具栏
 	};
 
 	var toolbarTemplate = ''
