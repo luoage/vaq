@@ -33,6 +33,7 @@
 	var mouseup = 'mouseup.' + eventScope;
 	var mousedown = 'mousedown.' + eventScope;
 	var keyup = 'keyup.' + eventScope;
+	var click = 'click.' + eventScope;
 
 	var options = {
 		pointer: 0, // 从第一个开始处理
@@ -48,7 +49,8 @@
 		scale: 0.05, // 缩放比例
 		toolbar: true, // 显示工具栏
 		imgList: true, // 图片列表
-		sideArrows: false // 图片左右按钮
+		sideArrows: false, // 图片左右按钮
+		targetTrigger: true // 给图片增加点击显示事件
 	};
 
 	var toolbarTemplate = ''
@@ -71,7 +73,7 @@
 			this.size = this._size();
 			this.resetParam();
 
-			this.showPanel();
+			this.opts.targetTrigger && this.showPanel();
 		},
 
 		render: function(index) {
@@ -92,7 +94,7 @@
 			var _this = this;
 			var target = this.opts.target;
 
-			target.on('click.' + eventScope, function() {
+			target.on(click, function() {
 				var index = target.toArray().indexOf(this);
 
 				_this.render(index);
