@@ -47,7 +47,8 @@
 		reverseVertical: 0.05, // 水平旋转
 		scale: 0.05, // 缩放比例
 		toolbar: true, // 显示工具栏
-		imgList: true // 图片列表
+		imgList: true, // 图片列表
+		sideArrows: false // 图片左右按钮
 	};
 
 	var toolbarTemplate = ''
@@ -74,6 +75,12 @@
 		},
 
 		render: function(index) {
+			var opts = this.opts;
+
+			if (!opts.target || !opts.target.length) {
+				return;
+			}
+
 			this.prepare();
 			this._render(index);
 		},
@@ -199,7 +206,7 @@
 			image = $(image).addClass('lg-represent-img').css('visibility', 'hidden');
 
 			this.represent.addClass('lg-loading').html(image);
-			this.sideArrows(pointer !== 0, pointer !== opts.target.length - 1);
+			opts.sideArrows && this.sideArrows(pointer !== 0, pointer !== opts.target.length - 1);
 
 			image.on('load', function() {
 				_this.represent.removeClass('lg-loading');
