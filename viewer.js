@@ -46,7 +46,8 @@
 		reverseHorizontal: 0.05, // 水平旋转
 		reverseVertical: 0.05, // 水平旋转
 		scale: 0.05, // 缩放比例
-		toolbar: true // 显示工具栏
+		toolbar: true, // 显示工具栏
+		imgList: true // 图片列表
 	};
 
 	var toolbarTemplate = ''
@@ -119,8 +120,24 @@
 			return $(list);
 		},
 
+		/**
+		 * 添加左右箭头
+		 */
+		sideArrows: function(isleft, isright) {
+			var right = $('<div>').addClass('lg-viewer-right-arrow');
+			var left = $('<div>').addClass('lg-viewer-left-arrow');
+
+			$(right).on('click', this.nextImg.bind(this));
+			$(left).on('click', this.prevImg.bind(this));
+
+			isleft && this.represent.append(left);
+			isright && this.represent.append(right);
+		},
+
 		prepare: function() {
 			layout.html('');
+
+			var opts = this.opts;
 
 			this.imgList = this.imgsList();
 			this.represent = $('<div>').addClass('lg-represent');
@@ -134,8 +151,8 @@
 
 			layout.append(this.close);
 			layout.append(this.represent);
-			this.opts.toolbar && layout.append(this.toolbar);
-			layout.append(bottom);
+			opts.toolbar && layout.append(this.toolbar);
+			opts.imgList && layout.append(bottom);
 
 			body.append(layout);
 
@@ -182,6 +199,7 @@
 			image = $(image).addClass('lg-represent-img').css('visibility', 'hidden');
 
 			this.represent.addClass('lg-loading').html(image);
+			this.sideArrows(pointer !== 0, pointer !== opts.target.length - 1);
 
 			image.on('load', function() {
 				_this.represent.removeClass('lg-loading');
@@ -317,7 +335,7 @@
 
 		rotateLeftImg: function() {
 			var interval = setInterval(function() {
-				this.rotateAngle += this.opts.rotate;
+				this.rotateAngle -= this.opts.rotate;
 
 				this._transform(function(image) {
 					return this.fixTransform();
@@ -333,7 +351,7 @@
 
 		rotateRightImg: function() {
 			var interval = setInterval(function() {
-				this.rotateAngle -= this.opts.rotate;
+				this.rotateAngle += this.opts.rotate;
 
 				this._transform(function(image) {
 					return this.fixTransform();
