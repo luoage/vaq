@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>img viewer</title>
+		<script src="/example/jquery.min.js"></script>
+		<script src="/example/require.min.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+
+		<form id="first">
+			<fieldset>
+				<legend>healthy</legend>
+				height: <input type="text" name="height" value="1.8m"/>
+				weight: <input type="text" name="weight" value="70kg"/>
+				<br />
+				hobby:
+				<input type="checkbox" name="hobby" value="basketball" checked />basketball
+				<input type="checkbox" name="hobby" value="music" checked  />music
+				<input type="checkbox" name="hobby" value="shooter" checked  />shooter
+				<br />
+				<br />
+
+				<input type="button" value="form">
+				<input type="button" value="formObj">
+				<input type="button" value="formStr">
+				<input type="button" value="formComma">
+			</fieldset>
+		</form>
+
+		<script>
+			define('jquery', function() {
+				return window.jQuery;
+			});
+
+			require(['../../form'], function() {
+				var form = document.getElementById('first');
+
+				var div = function() {
+					var target = document.createElement('div');
+
+					form.appendChild(target);
+					return target;
+				};
+
+				$('#first').on('click', '[type="button"]', function() {
+					var s = $('#' + 'first')[this.value]();
+
+					div().innerHTML = JSON.stringify(s);
+				});
+			});
+		</script>
+	</body>
+</html>

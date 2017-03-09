@@ -1,7 +1,5 @@
 /**
  * ajax请求
- *
- * @author luoage@msn.cn
  */
 (function(factory) {
 	// CommonJs

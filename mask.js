@@ -1,6 +1,4 @@
 /**
- * by luoage@msn.cn
- *
  * 遮罩
  *
  * @example

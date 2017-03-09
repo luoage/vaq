@@ -1,7 +1,5 @@
 /**
  * 图片查看器
- *
- * @author luoage@msn.cn
  */
 (function(factory) {
 	// CommonJs

@@ -1,9 +1,6 @@
 /**
- * by jl
- *
  * 获取form或者任意标签中的表单值
- * @TODO 兼容 suggest
- * 支持多个form合并获取值
+ * 支持多个form合并获取值, input支持suggestname作为name值
  *
  * @example
  * $('...').formObj() // key-value Object
@@ -139,6 +136,20 @@
 			});
 
 			return obj;
+		},
+
+		/**
+		 * 存在数组则使用逗号分割
+		 */
+		formComma: function() {
+			var obj = this.formObj.apply(this, arguments);
+			var _obj = {};
+
+			$.each(obj, function(key, item) {
+				_obj[key] = $.isArray(item) ? item.join(',') : item;
+			});
+
+			return _obj;
 		},
 
 		/**

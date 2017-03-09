@@ -1,7 +1,5 @@
 /**
  * 时间控件
- *
- * @author luoage@msn.cn
  */
 (function(factory) {
 	// CommonJs

@@ -2,8 +2,6 @@
  * 自定义scroll
  *
  * 不需要支持苹果系统
- *
- * by luoage@msn.cn
  */
 (function(factory) {
 	// CommonJs

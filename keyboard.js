@@ -1,6 +1,4 @@
 /**
- * by luoage@msn.cn
- *
  * 键盘按键
  */
 (function(factory) {

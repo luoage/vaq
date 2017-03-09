@@ -1,6 +1,5 @@
 /**
  * popup
- * @author luoage@msn.cn
  *
  * @dep jquery
  * @dep ./mask

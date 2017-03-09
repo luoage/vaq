@@ -1,6 +1,4 @@
 /**
- * by luoage@msn.cn
- *
  * [suggestvalue], [suggestname] 作为suggest的值和名称，所以就算是input元素也不需要name
  *
  * @example
@@ -9,7 +7,7 @@
  *
  * class="suggest-input"是标志位用来辨认是否需要增加suggest
  * data-url用于获取数据
- * suggestname用于jq_form获取值suggestvalue值使用, suggestvalue属性会在点击后或者选择后被修改
+ * suggestname用于form获取值suggestvalue值使用, suggestvalue属性会在点击后或者选择后被修改
  * 所有该input元素的所有data都会以键值对的以参数的形式传入后端, 不包括data-url
  *
  */

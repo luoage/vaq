@@ -1,7 +1,5 @@
 /**
- * 基础方法
- *
- * @author luoage@msn.cn
+ * base functions
  */
 (function(factory) {
 	// CommonJs
