@@ -473,7 +473,7 @@
 			};
 
 			// 放大缩小
-			opts.wheelKey && doc.on([mousewheel, mousescroll].join(' '), function(e) {
+			opts.wheelKey && this.represent.on([mousewheel, mousescroll].join(' '), '.lg-represent-img', function(e) {
 				!isUp(e) ? _this.zoomInImg() : _this.zoomOutImg();
 			});
 
