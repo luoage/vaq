@@ -1,0 +1,29 @@
+{
+  "code": 0,
+  "info": [
+    {"value": 1, "display": "ani1"},
+    {"value": 2, "display": "ani3"},
+    {"value": 3, "display": "ani4"},
+    {"value": 4, "display": "ani5"},
+    {"value": 5, "display": "ani6"},
+    {"value": 6, "display": "ani7"},
+    {"value": 1, "display": "ani1"},
+    {"value": 2, "display": "ani3"},
+    {"value": 3, "display": "ani4"},
+    {"value": 4, "display": "ani5"},
+    {"value": 5, "display": "ani6"},
+    {"value": 6, "display": "ani7"},
+    {"value": 1, "display": "ani1"},
+    {"value": 2, "display": "ani3"},
+    {"value": 3, "display": "ani4"},
+    {"value": 4, "display": "ani5"},
+    {"value": 5, "display": "ani6"},
+    {"value": 6, "display": "ani7"},
+    {"value": 1, "display": "ani1"},
+    {"value": 2, "display": "ani3"},
+    {"value": 3, "display": "ani4"},
+    {"value": 4, "display": "ani5"},
+    {"value": 5, "display": "ani6"},
+    {"value": 6, "display": "ani7"}
+  ]
+}

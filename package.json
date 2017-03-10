@@ -5,7 +5,8 @@
   "description": "前端整套工具",
   "main": "base.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint --cache --cache-location=./.eslintcache ./ && echo 'eslint success !' || exit 0"
+    "lint": "node_modules/.bin/eslint --cache --cache-location=./.eslintcache ./ && echo 'eslint success !' || exit 0",
+    "build": "./node_modules/.bin/webpack"
   },
   "pre-commit": [
     "lint"
@@ -17,5 +18,9 @@
     "eslint-plugin-promise": "2.0.1",
     "eslint-plugin-standard": "2.0.0",
     "pre-commit": "^1.2.2"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "webpack": "^2.2.1"
   }
 }

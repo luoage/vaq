@@ -11,18 +11,7 @@
  * 所有该input元素的所有data都会以键值对的以参数的形式传入后端, 不包括data-url
  *
  */
-
-(function(factory) {
-	// CommonJs
-	if (typeof exports === 'object' && typeof module === 'object') {
-		module.exports = factory(require);
-	// requirejs
-	} else if (typeof define === 'function' && (define.amd || define.cmd)) {
-		define(factory);
-	} else {
-		throw new Error('You can use webpack or third party plugins that support the AMD/CMD protocol.');
-	}
-})(function(require) {
+define(function(require) {
 	var $ = require('jquery');
 	var base = require('./base');
 	var Scroll = require('./scroll');

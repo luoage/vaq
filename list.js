@@ -21,17 +21,7 @@
  *
  * new list({opts}).setQuery().recolumn
  */
-(function(factory) {
-	// CommonJs
-	if (typeof exports === 'object' && typeof module === 'object') {
-		module.exports = factory(require);
-	// requirejs
-	} else if (typeof define === 'function' && (define.amd || define.cmd)) {
-		define(factory);
-	} else {
-		throw new Error('You can use webpack or third party plugins that support the AMD/CMD protocol.');
-	}
-})(function(require) {
+define(function(require) {
 	var $ = require('jquery');
 	var base = require('./base');
 	var Seq = require('./seq');
