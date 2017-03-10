@@ -1,6 +1,6 @@
 # Vaq
 
-> a set of front-end developer tools, like suggest, mask, alert, ajax, and so on
+> A set of front-end javascript tools, depend on [jQuery](https://github.com/jquery/jquery).
 
 ## Support loaders
 
