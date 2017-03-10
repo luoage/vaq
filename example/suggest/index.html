@@ -26,7 +26,8 @@
 
 			require(['../../observe', '../../suggest'], function(observe) {
 				observe.subscribe('set-suggest-input-value', function() {
-					console.log('test');
+					// @TODO Here is a bug in requirejs
+					console.log('I am a bug');
 				});
 			});
 		</script>
