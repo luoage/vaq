@@ -1,0 +1,19 @@
+[wheel="true"] {
+	.user-select-none();
+}
+
+[wheel="true"]:hover [scrollbar="true"] {
+	display: block;
+}
+
+[scrollbar="true"] {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 3px;
+	background-color: rgba(0, 0, 0, 0.2);
+	height: 0;
+	width: 5px;
+	.user-select-none();
+	.border-radius();
+}

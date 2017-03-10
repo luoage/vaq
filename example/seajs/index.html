@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>suggest</title>
+		<link rel="stylesheet/less" type="text/css" href="/less/base.less" />
+		<script src="/example/sea.js"></script>
+
+		<script>
+			less = {
+				env: "development"
+			};
+		</script>
+		<script src="/example/less.js"></script>
+		<script src="/example/jquery.min.js"></script>
+		<script src="/example/require.min.js"></script>
+	</head>
+	<body>
+
+		Your girl friend: <input class="suggest-input" data-url="list.json">
+
+		<script>
+			define('jquery', function() {
+				return window.jQuery;
+			});
+
+			seajs.use(['./test']);
+		</script>
+	</body>
+</html>

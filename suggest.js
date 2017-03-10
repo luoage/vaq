@@ -19,8 +19,10 @@
 	// requirejs
 	} else if (typeof define === 'function' && define.amd) {
 		define(factory);
+	} else if (typeof define === 'function' && define.cmd) {
+		define(factory);
 	} else {
-		throw new Error('You can use webpack or third party plugins that support the CMD protocol.');
+		throw new Error('You can use webpack or third party plugins that support the AMD protocol.');
 	}
 })(function(require) {
 	var $ = require('jquery');
@@ -29,8 +31,9 @@
 	var keyboard = require('./keyboard');
 	var observe = require('./observe');
 	var Seq = require('./seq');
+	var request = require('./request');
 
-	var $div = $('<div class="suggest"></div>');
+	var $div = $('<div class="lg-suggest lg-lg-lg"></div>');
 	var cacheObj = {};
 
 	/**
@@ -52,7 +55,7 @@
 			}
 
 			this.target = target;
-			this.div = $div.css(this.css()).html('<div class="loading" style="height:50px"></div>').appendTo('body').show();
+			this.div = $div.css(this.css()).html('<div class="lg-loading" style="height:50px"></div>').appendTo('body').show();
 
 			this.clearValue();
 			this.getData(data);
@@ -143,7 +146,7 @@
 				.seq(function() {
 					return cacheObj[sign] !== undefined
 						? this(cacheObj[sign])
-						: base.request({url: url, data: requestData}, this);
+						: request({url: url, data: requestData}, this);
 				})
 				.seq(function(list) {
 					cacheObj[sign] = list;
