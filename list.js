@@ -26,10 +26,10 @@
 	if (typeof exports === 'object' && typeof module === 'object') {
 		module.exports = factory(require);
 	// requirejs
-	} else if (typeof define === 'function' && define.amd) {
+	} else if (typeof define === 'function' && (define.amd || define.cmd)) {
 		define(factory);
 	} else {
-		throw new Error('You can use webpack or third party plugins that support the AMD protocol.');
+		throw new Error('You can use webpack or third party plugins that support the AMD/CMD protocol.');
 	}
 })(function(require) {
 	var $ = require('jquery');

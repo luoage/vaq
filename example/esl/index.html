@@ -11,24 +11,24 @@
 		</script>
 		<script src="/example/less.js"></script>
 		<script src="/example/jquery.min.js"></script>
-		<script src="/example/require.min.js"></script>
+		<script src="http://s1.bdstatic.com/r/www/cache/efe/esl/2-1-6/esl.js"></script>
 	</head>
 	<body>
 
 		Your girl friend: <input class="suggest-input" data-url="list.json">
 
-		<script>
-			less.watch();
+		<div id="desc"></div>
 
+		<script>
 			define('jquery', function() {
 				return window.jQuery;
 			});
 
-			require(['../../observe', '../../suggest'], function(observe) {
-				observe.subscribe('set-suggest-input-value', function() {
-					console.log('test');
-				});
+			require.config({
+					baseUrl: './',
 			});
+
+			require(['test']);
 		</script>
 	</body>
 </html>
