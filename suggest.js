@@ -221,7 +221,7 @@ define(function(require) {
 
 	var fn = base.debounce(function() {
 		suggest.init(this);
-	}, 50);
+	}, 200);
 
 	$(document).on('input', selector, function(e) {
 		if (keyboard.isUp(e) || keyboard.isDown(e) || keyboard.isEnter(e)) {
