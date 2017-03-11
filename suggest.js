@@ -74,7 +74,8 @@ define(function(require) {
 			list = list || [];
 
 			list.forEach(function(item) {
-				html += '<p ' + (+item.isDeleted ? 'class="lg-deleted"' : '') + ' data-value="' + base.escapeHtml(item.value) + '">' + base.escapeHtml(item.display) + '</p>';
+				html += '<p ' + (+item.isDeleted ? 'class="lg-deleted"' : '') + ' data-value="'
+					+ base.escapeHtml(item.value) + '">' + base.escapeHtml(item.display) + '</p>';
 			});
 
 			if (list.length) {
