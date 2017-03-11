@@ -5,7 +5,7 @@
   "description": "前端整套工具",
   "main": "base.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint --cache --cache-location=./.eslintcache ./ && echo 'eslint success !' || exit 0",
+    "lint": "node_modules/.bin/eslint --cache --cache-location=./.eslintcache ./ && echo 'eslint success !'",
     "build": "./node_modules/.bin/webpack"
   },
   "pre-commit": [
