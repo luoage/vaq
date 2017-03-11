@@ -34,7 +34,9 @@ define(function(require) {
 			options = Object.assign({
 				dataType: 'json',
 				type: 'get',
-				cache: false
+				cache: false,
+				isThrowDoneError: true, // 请求成功，code !== 0 也不报错
+				isThrowFailError: true // 请求失败也不报错
 			}, options);
 
 			var mask;
@@ -45,12 +47,15 @@ define(function(require) {
 				delete options.mask;
 			}
 
+			var isThrowDoneError = options.isThrowDoneError;
+			var isThrowFailError = options.isThrowFailError;
+
 			return $.ajax(options)
 				.done(function(res) {
 					res = res || {};
 
 					if (+res.code !== 0) {
-						tip(res.msg || '网络有误，请稍后重试！');
+						isThrowDoneError && tip(res.msg || '网络有误，请稍后重试！');
 						return;
 					}
 
@@ -61,7 +66,7 @@ define(function(require) {
 						return fail(res);
 					}
 
-					tip(res.msg || '网络有误，请稍后重试！');
+					isThrowFailError && tip(res.msg || '网络有误，请稍后重试！');
 				})
 				.always(function() {
 					mask && mask.remove();
