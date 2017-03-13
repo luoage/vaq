@@ -6,7 +6,8 @@
   "main": "base.js",
   "scripts": {
     "lint": "node_modules/.bin/eslint --cache --cache-location=./.eslintcache ./ && echo 'eslint success !'",
-    "build": "./node_modules/.bin/webpack"
+    "build": "./node_modules/.bin/webpack",
+    "less": "./node_modules/.bin/lessc --clean-css less/base.less dist/base.css"
   },
   "pre-commit": [
     "lint"

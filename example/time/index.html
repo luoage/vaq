@@ -30,10 +30,10 @@
 
 		<script>
 			less.watch();
-			define('jquery', function() {
-				return window.jQuery;
-			});
-			require(['./test']);
+		</script>
+		<script src="test.js"></script>
+		<script>
+			require(['test']);
 		</script>
 	</body>
 </html>

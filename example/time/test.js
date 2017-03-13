@@ -1,4 +1,8 @@
-define(function(require) {
+define('jquery', function() {
+	return window.jQuery;
+});
+
+define('test', function(require) {
 	var Time = require('../../time');
 	var base = require('../../base');
 

@@ -1,5 +1,6 @@
 /**
  * 时间控件
+ * @TODO 当input时间不符合规范，生成的date有错误
  */
 define(function(require) {
 	var $ = require('jquery');
