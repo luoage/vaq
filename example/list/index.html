@@ -38,8 +38,8 @@
 				return window.jQuery;
 			});
 
-			require(['../../list', '../../base', '../../form', 'jquery'],
-				function(List, base, form, $) {
+			require(['../../list', '../../base', '../../form', 'jquery', '../../popup'],
+				function(List, base, form, $, Popup) {
 					var nodes = base.getNodes();
 
 					var columns = [
@@ -51,6 +51,14 @@
 						{title: '其他', field: 'opt', escape: false}
 					];
 
+					$(nodes.list).on('click', 'a', function() {
+						var record = $(this).closest('tr').data('record');
+
+						new Popup({
+							html: base.escapeHtml(JSON.stringify(record))
+						});
+					});
+
 					var list = new List({
 							container: nodes.list,
 							columns: columns,
@@ -59,6 +67,7 @@
 							ajaxOpts: {
 								url: 'list.json'
 							},
+							pageFromServer: false
 						})
 						.setQuery(function() {
 							var obj = $(nodes.form).formObj();

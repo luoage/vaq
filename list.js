@@ -9,7 +9,7 @@
  * 		list: [],
  * 		pagination: {
  * 			total: 总条数,
- * 			page: 当前第几页
+ * 			page: 当前第几页(可选)
  * 		}
  * 	}
  * }
@@ -19,7 +19,7 @@
  *	{title:, field:, escape:, nowrap:}
  * ]
  *
- * new list({opts}).setQuery().recolumn
+ * new List({opts}).setQuery()
  */
 define(function(require) {
 	var $ = require('jquery');
@@ -34,7 +34,8 @@ define(function(require) {
 		ajaxOpts: {},
 		columns: [],
 		isMask: true,
-		maskOpts: {}
+		maskOpts: {},
+		pageFromServer: false // 以服务器返回的page作为当前页面
 	};
 
 	var template = ''
@@ -48,9 +49,9 @@ define(function(require) {
 		+ '				<[ }) ]>'
 		+ '			</tr>'
 		+ '		</thead>'
-		+ '		<tbody>'
-		+ '			<[list.forEach(function(record) { ]>'
-		+ '			<tr>'
+		+ '		<tbody class="lg-table-tr">'
+		+ '			<[list.forEach(function(record, key) { ]>'
+		+ '			<tr data-index="<[- key ]>">'
 		+ '				<['
 		+ '					opts.columns.forEach(function(column) { '
 		+ '					var value = record[column.field];'
@@ -207,6 +208,8 @@ define(function(require) {
 						: '';
 				});
 
+				item._original_ = obj;
+
 				_list.push(item);
 			});
 
@@ -244,6 +247,10 @@ define(function(require) {
 			this.request()
 				.seq(function(list, pagination) {
 					_this.toList(list, pagination);
+					this(list);
+				})
+				.seq(function(list) {
+					_this.attachData(list);
 				})
 				.resolve();
 		},
@@ -307,7 +314,7 @@ define(function(require) {
 
 					var pagination = info.pagination || {};
 
-					_this.page = pagination.page;
+					_this.page = opts.pageFromServer ? pagination.page : _this.page;
 
 					this(list, { total: pagination.total });
 				});
@@ -322,6 +329,18 @@ define(function(require) {
 		setPage: function(page) {
 			this.page = page;
 			this.render();
+		},
+
+		/**
+		 * 把数据依附到对应的行
+		 */
+		attachData: function(list) {
+			$(this.opts.container).find('.lg-table-tr').find('tr').each(function() {
+				var $this = $(this);
+				var index = $this.data('index');
+
+				$this.data('record', (list[index] || {})._original_);
+			});
 		}
 	});
 
