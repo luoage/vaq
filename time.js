@@ -1,7 +1,7 @@
 /**
  * 时间控件
  */
-define(function() {
+define(function(require) {
 	var $ = require('jquery');
 	var base = require('./base');
 
