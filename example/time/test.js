@@ -1,8 +1,6 @@
-define('jquery', function() {
-	return window.jQuery;
-});
-
-require(['../../time', '../../base'], function(Time, base) {
+define(function(require) {
+	var Time = require('../../time');
+	var base = require('../../base');
 
 	// 关闭控件
 	$(document).on('click', function(e) {
