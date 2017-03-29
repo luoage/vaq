@@ -18,7 +18,9 @@ define(function(require) {
 		hasSecond: true, // 是否存在秒
 		hastime: true, // 是否存在时间
 		zIndex: 99,
-		nicetop: 1
+		nicetop: 1,
+		autoClose: false, // 自动关闭
+		setTodayAutoClose: false // 点击今天按钮自动关闭
 	};
 
 	var yearListTemplate = ''
@@ -456,6 +458,7 @@ define(function(require) {
 			dates.setDate();
 
 			this.setValue();
+			this.opts.setTodayAutoClose && this.remove();
 
 			return true;
 		},
@@ -541,6 +544,7 @@ define(function(require) {
 			this.body.find('[data-type="month_list"]').data('value', m).html(base.pad(m + 1));
 
 			this.setTargetValue();
+			this.opts.autoClose && this.remove();
 			return true;
 		},
 
