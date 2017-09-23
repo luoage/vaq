@@ -19,9 +19,14 @@ define(function(require) {
 	var rcheckableType = (/^(?:checkbox|radio)$/i);
 	var suggest = 'suggest-input';
 
+	/**
+	 * @param 是否支持下划线 default false
+	 * @param 是否支持空 default true
+	 * @param 是否自动trim掉额外空格 default true
+	 */
 	var _form = function(enableBaseLine, supportEmptyValue, trimSpace) {
 		enableBaseLine = enableBaseLine === undefined ? false : enableBaseLine;
-		supportEmptyValue = supportEmptyValue === undefined ? false : supportEmptyValue;
+		supportEmptyValue = supportEmptyValue === undefined ? true : supportEmptyValue;
 		trimSpace = trimSpace === undefined ? true : trimSpace;
 
 		return this.map(function() {
@@ -56,7 +61,7 @@ define(function(require) {
 		.map(function(i, elem) {
 			var $this = jQuery(this);
 			var isSuggest = $this.hasClass(suggest);
-			var val = isSuggest ? $this.attr('suggestvalue') : $this.val();
+			var val = isSuggest ? $this.attr('suggestvalue') : (rcheckableType.test(this.type) ? this.checked : $this.val());
 			var name = isSuggest ? $this.attr('suggestname') || this.name : this.name;
 
 			name = enableBaseLine ? name.replace(/([A-Z])/g, '_$1').toLowerCase() : name;
@@ -96,7 +101,7 @@ define(function(require) {
 		 *
 		 * @return {Array} [{name: , value: }, {}]
 		 */
-		form: function() {
+		forms: function() {
 			var args = $.makeArray(arguments);
 
 			return _form.apply(this, args).get();
