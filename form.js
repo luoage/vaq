@@ -11,8 +11,8 @@
 define(function(require) {
 	require('./jquery.clone');
 
-	var $ = require('jquery');
 	var jQuery = $;
+
 	var rCRLF = /\r?\n/g;
 	var rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i;
 	var rsubmittable = /^(?:input|select|textarea|keygen)/i;

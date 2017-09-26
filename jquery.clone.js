@@ -2,7 +2,6 @@
  * fix jquery clone function
  */
 define(function(require) {
-	var $ = require('jquery');
 
 	// 重写clone, 修复select, textarea 值clone丢失的问题
 	((function(original) {
