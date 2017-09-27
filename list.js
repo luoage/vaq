@@ -85,6 +85,7 @@ define(function(require) {
 	var options = {
 		container: undefined, // 容器，必填 {node|HTMLElement}
 		template: template,
+		pageTpl: pageTpl,
 		page: 1, // 默认从第一页开始
 		perpage: 10, // 每个页面的个数
 		ajaxOpts: {},
