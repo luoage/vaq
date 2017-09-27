@@ -27,17 +27,6 @@ define(function(require) {
 	var Seq = require('./seq');
 	var request = require('./request');
 
-	var options = {
-		container: undefined, // 容器，必填 {node|HTMLElement}
-		page: 1, // 默认从第一页开始
-		perpage: 10, // 每个页面的个数
-		ajaxOpts: {},
-		columns: [],
-		isMask: true,
-		maskOpts: {},
-		pageFromServer: false // 以服务器返回的page作为当前页面
-	};
-
 	var pageTpl = ''
 		+ '	<div class="lg-pagination">'
 		+ '		<[ if (+pagination.total) {]>'
@@ -92,6 +81,18 @@ define(function(require) {
 		+ '		</tbody>'
 		+ '	</table>'
 		+ '</div>';
+
+	var options = {
+		container: undefined, // 容器，必填 {node|HTMLElement}
+		template: template,
+		page: 1, // 默认从第一页开始
+		perpage: 10, // 每个页面的个数
+		ajaxOpts: {},
+		columns: [],
+		isMask: true,
+		maskOpts: {},
+		pageFromServer: false // 以服务器返回的page作为当前页面
+	};
 
 	var List = base.inherit({
 		initialize: function(opts) {
