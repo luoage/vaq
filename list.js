@@ -38,31 +38,7 @@ define(function(require) {
 		pageFromServer: false // 以服务器返回的page作为当前页面
 	};
 
-	var template = ''
-		+ '<div class="lg-table-wrap lg-lg-lg">'
-		+ '<div class="lg-table-list">'
-		+ '	<table cellpadding="0" cellspacing="0" border="0">'
-		+ '		<thead>'
-		+ '			<tr>'
-		+ '				<[ opts.columns.forEach(function(item) { ]>'
-		+ '					<th><[- item.title||\'\' ]></th>'
-		+ '				<[ }) ]>'
-		+ '			</tr>'
-		+ '		</thead>'
-		+ '		<tbody class="lg-table-tr">'
-		+ '			<[list.forEach(function(record, key) { ]>'
-		+ '			<tr data-index="<[- key ]>">'
-		+ '				<['
-		+ '					opts.columns.forEach(function(column) { '
-		+ '					var value = record[column.field];'
-		+ '				]>'
-		+ '				<td <[- column.nowrap ? \'class="lg-white-space-nowrap"\' : \'\' ]> ><[- value === undefined ? \'\' : value ]></td>'
-		+ '				<[ }) ]>'
-		+ '			</tr>'
-		+ '			<[ }) ]>'
-		+ '		</tbody>'
-		+ '	</table>'
-		+ '</div>'
+	var pageTpl = ''
 		+ '	<div class="lg-pagination">'
 		+ '		<[ if (+pagination.total) {]>'
 		+ '		<p class="lg-pagination-detail">'
@@ -89,9 +65,32 @@ define(function(require) {
 		+ '			<[ } ]>'
 		+ '		</ul>'
 		+ '		<[ } else { ]>'
-		+ '			<p class="lg-empty">暂无数据 !</p>'
+		+ '			<div class="lg-empty"><p>暂无数据 !</p></div>'
 		+ '		<[ } ]>'
-		+ '	</div>'
+		+ '	</div>';
+	var template = ''
+		+ '<div class="lg-table-list">'
+		+ '	<table cellpadding="0" cellspacing="0" border="0">'
+		+ '		<thead>'
+		+ '			<tr>'
+		+ '				<[ opts.columns.forEach(function(item) { ]>'
+		+ '					<th <[ if(item.className) {]> class="<[= item.className ]>" <[ } ]> ><[- item.title||\'\' ]></th>'
+		+ '				<[ }) ]>'
+		+ '			</tr>'
+		+ '		</thead>'
+		+ '		<tbody class="lg-table-tr">'
+		+ '			<[list.forEach(function(record, key) { ]>'
+		+ '			<tr data-index="<[- key ]>">'
+		+ '				<['
+		+ '					opts.columns.forEach(function(column) { '
+		+ '					var value = record[column.field];'
+		+ '				]>'
+		+ '				<td <[- column.nowrap ? \'class="lg-white-space-nowrap"\' : \'\' ]> ><[- value === undefined ? \'\' : value ]></td>'
+		+ '				<[ }) ]>'
+		+ '			</tr>'
+		+ '			<[ }) ]>'
+		+ '		</tbody>'
+		+ '	</table>'
 		+ '</div>';
 
 	var List = base.inherit({
@@ -182,8 +181,9 @@ define(function(require) {
 
 		toList: function(list, pagination) {
 			var opts = this.opts;
+			var tpl = '<div class="lg-table-wrap lg-lg-lg">' + opts.template + opts.pageTpl + '</div>';
 
-			var build = base.template(template)({
+			var build = base.template(tpl)({
 				opts: opts,
 				list: list,
 				pagination: this.pagination(pagination)
