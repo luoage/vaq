@@ -27,7 +27,9 @@ define(function(require) {
 	 */
 	var request = function() {
 		$.ajaxPrefilter(function(options, originalOptions, jqXhr) {
-			jqXhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+			var content = $('meta[name="csrf-token"]').attr('content');
+
+			content && jqXhr.setRequestHeader('X-CSRF-TOKEN', content);
 		});
 
 		return function(options, done, fail) {
