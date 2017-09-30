@@ -255,8 +255,9 @@ define(function(require) {
 		 *
 		 * @return {string} 返回字符串时间
 		 */
-		formatDate: function(format, date) {
-			date = date ? (typeof date === 'string' ? new Date(date) : date) : new Date();
+		formatDate: function(date, format) {
+			format = format || 'yyyy-mm-dd hh:ii:ss';
+			date = date ? (typeof date === 'object' ? date : new Date(+date)) : new Date();
 
 			var y = date.getFullYear();
 			var m = date.getMonth() + 1;
