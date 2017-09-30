@@ -61,13 +61,17 @@ define(function(require) {
 		.map(function(i, elem) {
 			var $this = jQuery(this);
 			var isSuggest = $this.hasClass(suggest);
-			var val = isSuggest ? $this.attr('suggestvalue') : (rcheckableType.test(this.type) ? this.checked : $this.val());
+			var val = isSuggest ? $this.attr('suggestvalue') : $this.val();
 			var name = isSuggest ? $this.attr('suggestname') || this.name : this.name;
 
 			name = enableBaseLine ? name.replace(/([A-Z])/g, '_$1').toLowerCase() : name;
 
 			if (val === null) {
 				return null;
+			}
+
+			if (rcheckableType.test(this.type) && val === 'on') {
+				vaq = true;
 			}
 
 			if (trimSpace) {
