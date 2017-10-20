@@ -31,7 +31,7 @@ define(function(require) {
 		mask.addClass('lg-mask').addClass('lg-lg-lg').css(this.config.css);
 
 		this.config.loading && mask.addClass('lg-ajax-loading');
-
+		this.config.loading && mask.append('<div class="ui active loader lg-fixed-loading"></div>');
 		this.target = target;
 	};
 
