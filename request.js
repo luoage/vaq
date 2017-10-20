@@ -9,7 +9,7 @@ define(function(require) {
 	var tip = function(html) {
 		return new Popup({html: html, delayTime: 3000});
 	};
-
+	var loader = $('<div class="ui active loader lg-fixed-loading"></div>');
 	/**
 	 * ajax操作
 	 *
@@ -37,6 +37,7 @@ define(function(require) {
 				dataType: 'json',
 				type: 'get',
 				cache: false,
+				loading:false,
 				isThrowDoneError: true, // 请求成功，code !== 0 也不报错
 				isThrowFailError: true // 请求失败也不报错
 			}, options);
@@ -48,7 +49,9 @@ define(function(require) {
 
 				delete options.mask;
 			}
-
+			if (options.loading) {
+				$('body').append(loader);
+			}
 			var isThrowDoneError = options.isThrowDoneError;
 			var isThrowFailError = options.isThrowFailError;
 
@@ -72,6 +75,7 @@ define(function(require) {
 				})
 				.always(function() {
 					mask && mask.remove();
+					options.loading && loader.remove();
 				});
 		};
 	};
