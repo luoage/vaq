@@ -22,6 +22,24 @@
 	/*background-image: url('./imgs/load.gif');*/
 	background-position: center center;
 	background-repeat: no-repeat;
+	.ui{
+		background-color: transparent !important;
+		border: 0 !important;
+		box-shadow: none !important;
+		.loader{
+			width: 3em;
+			height: 3em;
+			&:before{
+				width: 3em;
+				height: 3em;
+			}
+			&:after{
+				width: 3em;
+				height: 3em;
+				border-color: #ff3000 transparent transparent;
+			}
+		}
+	}
 }
 .lg-fixed-loading{
 	&:before{

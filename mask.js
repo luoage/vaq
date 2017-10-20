@@ -31,6 +31,10 @@ define(function(require) {
 		mask.addClass('lg-mask').addClass('lg-lg-lg').css(this.config.css);
 
 		this.config.loading && mask.addClass('lg-ajax-loading');
+		this.config.loading && mask.html('<div class="ui segment">\n' +
+			 '  <div class="ui active loader"></div>\n' +
+			 '  <p></p>\n' +
+			 ' </div>');
 
 		this.target = target;
 	};
